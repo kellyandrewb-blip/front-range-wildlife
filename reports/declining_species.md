@@ -1,8 +1,8 @@
 # Declining Species Report -- Front Range Wildlife
 
 **Area:** 50-mile radius around Highlands Ranch, CO  
-**Prior period:** 2024-03-14 to 2025-03-14  
-**Current period:** 2025-03-15 to 2026-03-15  
+**Prior period:** 2024-03-15 to 2025-03-15  
+**Current period:** 2025-03-16 to 2026-03-16  
 **Decline threshold:** 40% or greater drop  
 **Minimum prior observations:** 10  
 **Report generated:** 2026-03-16
@@ -13,17 +13,17 @@
 
 | Period | Unique Observers |
 |--------|-----------------|
-| Prior (Mar 2024 – Mar 2025) | 10,895 |
-| Current (Mar 2025 – Mar 2026) | 11,479 |
-| Change | **+5.4%** |
+| Prior (Mar 2024 – Mar 2025) | 10,901 |
+| Current (Mar 2025 – Mar 2026) | 11,473 |
+| Change | **+5.2%** |
 
-*Observer participation is roughly stable (+5.4% region-wide). Overall effort has not changed meaningfully between periods, so species-level declines are less likely to be explained by fewer people submitting observations.*
+*Observer participation is roughly stable (+5.2% region-wide). Overall effort has not changed meaningfully between periods, so species-level declines are less likely to be explained by fewer people submitting observations.*
 
 ---
 
 ## Summary
 
-- **144,026** total observations in the prior period; **209,742** in the current period
+- **144,118** total observations in the prior period; **209,635** in the current period
 - **1,908** species had at least 10 observations in the prior period and were analyzed for decline
 - **181** species flagged: **22** disappeared entirely, **159** declined by 40% or more
 
@@ -45,16 +45,16 @@ Species are ranked within each group by severity of decline (worst first).
 
 |   # | Common Name                   | Scientific Name            |   Prior Obs |   Curr Obs | Change      |   Prior Observers |   Curr Observers | Status      | Confidence      |
 |-----|-------------------------------|----------------------------|-------------|------------|-------------|-------------------|------------------|-------------|-----------------|
-|   1 | Curve-billed thrasher         | Toxostoma curvirostre      |          12 |          0 | Disappeared |                11 |                0 | Disappeared | HIGH CONFIDENCE |
-|   2 | Yellow-billed loon            | Gavia adamsii              |          15 |          0 | Disappeared |                14 |                0 | Disappeared | HIGH CONFIDENCE |
+|   1 | Yellow-billed loon            | Gavia adamsii              |          15 |          0 | Disappeared |                14 |                0 | Disappeared | HIGH CONFIDENCE |
+|   2 | Curve-billed thrasher         | Toxostoma curvirostre      |          12 |          0 | Disappeared |                11 |                0 | Disappeared | HIGH CONFIDENCE |
 |   3 | Glossy ibis                   | Plegadis falcinellus       |          11 |          0 | Disappeared |                10 |                0 | Disappeared | HIGH CONFIDENCE |
 |   4 | Sagebrush sparrow             | Artemisiospiza nevadensis  |          10 |          0 | Disappeared |                 8 |                0 | Disappeared | NEEDS REVIEW    |
 |   5 | Black rosy-finch              | Leucosticte atrata         |          62 |          1 | -98.4%      |                 2 |                1 | Declining   | OBSERVER EFFECT |
 |   6 | Gray-crowned rosy-finch       | Leucosticte tephrocotis    |          52 |          2 | -96.2%      |                 3 |                2 | Declining   | OBSERVER EFFECT |
 |   7 | White-winged scoter           | Melanitta deglandi         |          14 |          1 | -92.9%      |                13 |                1 | Declining   | HIGH CONFIDENCE |
-|   8 | Swainson's thrush             | Catharus ustulatus         |          13 |          2 | -84.6%      |                11 |                2 | Declining   | HIGH CONFIDENCE |
-|   9 | Red-necked phalarope          | Phalaropus lobatus         |          12 |          2 | -83.3%      |                 9 |                2 | Declining   | NEEDS REVIEW    |
-|  10 | Varied thrush                 | Ixoreus naevius            |          11 |          2 | -81.8%      |                11 |                2 | Declining   | HIGH CONFIDENCE |
+|   8 | Varied thrush                 | Ixoreus naevius            |          12 |          1 | -91.7%      |                12 |                1 | Declining   | HIGH CONFIDENCE |
+|   9 | Swainson's thrush             | Catharus ustulatus         |          13 |          2 | -84.6%      |                11 |                2 | Declining   | HIGH CONFIDENCE |
+|  10 | Red-necked phalarope          | Phalaropus lobatus         |          12 |          2 | -83.3%      |                 9 |                2 | Declining   | NEEDS REVIEW    |
 |  11 | Tundra swan                   | Cygnus columbianus         |          10 |          2 | -80.0%      |                 6 |                2 | Declining   | NEEDS REVIEW    |
 |  12 | Northern shrike               | Lanius borealis            |          37 |          9 | -75.7%      |                25 |                8 | Declining   | HIGH CONFIDENCE |
 |  13 | Cassin's finch                | Haemorhous cassinii        |          17 |          5 | -70.6%      |                11 |                5 | Declining   | HIGH CONFIDENCE |
@@ -78,11 +78,11 @@ Species are ranked within each group by severity of decline (worst first).
 |-----|---------------------------------------|--------------------------------|-------------|------------|-------------|-------------------|------------------|-------------|-----------------|
 |   1 | Condylostylus caudatus                | Condylostylus caudatus         |          51 |          0 | Disappeared |                21 |               35 | Disappeared | HIGH CONFIDENCE |
 |   2 | Diplotaxis                            | Diplotaxis                     |          35 |          0 | Disappeared |                19 |               23 | Disappeared | HIGH CONFIDENCE |
-|   3 | Scymnus                               | Scymnus                        |          17 |          0 | Disappeared |                 4 |                4 | Disappeared | OBSERVER EFFECT |
+|   3 | Berosus                               | Berosus                        |          17 |          0 | Disappeared |                 7 |                4 | Disappeared | NEEDS REVIEW    |
 |   4 | Hesperophylax                         | Hesperophylax                  |          17 |          0 | Disappeared |                 9 |               15 | Disappeared | NEEDS REVIEW    |
-|   5 | Olive arches moth                     | Lacinipolia olivacea           |          14 |          0 | Disappeared |                 6 |                0 | Disappeared | NEEDS REVIEW    |
-|   6 | Camptoprosopella                      | Camptoprosopella               |          13 |          0 | Disappeared |                 2 |                8 | Disappeared | OBSERVER EFFECT |
-|   7 | Berosus                               | Berosus                        |          17 |          0 | Disappeared |                 7 |                4 | Disappeared | NEEDS REVIEW    |
+|   5 | Camptoprosopella                      | Camptoprosopella               |          13 |          0 | Disappeared |                 2 |                8 | Disappeared | OBSERVER EFFECT |
+|   6 | Olive arches moth                     | Lacinipolia olivacea           |          14 |          0 | Disappeared |                 6 |                0 | Disappeared | NEEDS REVIEW    |
+|   7 | Scymnus                               | Scymnus                        |          17 |          0 | Disappeared |                 4 |                4 | Disappeared | OBSERVER EFFECT |
 |   8 | Endiodioctes                          | Endiodioctes                   |          12 |          0 | Disappeared |                 1 |                1 | Disappeared | OBSERVER EFFECT |
 |   9 | Elm leaftier moth                     | Canarsia ulmiarrosorella       |          10 |          0 | Disappeared |                 2 |                0 | Disappeared | OBSERVER EFFECT |
 |  10 | Geranomyia                            | Geranomyia                     |          10 |          0 | Disappeared |                 3 |                0 | Disappeared | OBSERVER EFFECT |
@@ -92,13 +92,13 @@ Species are ranked within each group by severity of decline (worst first).
 |  14 | Sphragisticus nebulosus               | Sphragisticus nebulosus        |          52 |          5 | -90.4%      |                30 |                5 | Declining   | HIGH CONFIDENCE |
 |  15 | Colorado hairstreak                   | Hypaurotis crysalus            |          25 |          3 | -88.0%      |                16 |                3 | Declining   | HIGH CONFIDENCE |
 |  16 | Strawberry crown moth                 | Synanthedon bibionipennis      |          14 |          2 | -85.7%      |                12 |                1 | Declining   | HIGH CONFIDENCE |
-|  17 | White slant-line                      | Tetracis cachexiata            |          12 |          2 | -83.3%      |                10 |                2 | Declining   | HIGH CONFIDENCE |
-|  18 | Pale crescent                         | Phyciodes pallida              |          12 |          2 | -83.3%      |                 7 |                2 | Declining   | NEEDS REVIEW    |
+|  17 | Pale crescent                         | Phyciodes pallida              |          12 |          2 | -83.3%      |                 7 |                2 | Declining   | NEEDS REVIEW    |
+|  18 | White slant-line                      | Tetracis cachexiata            |          12 |          2 | -83.3%      |                10 |                2 | Declining   | HIGH CONFIDENCE |
 |  19 | Pink-barred pseudeustrotia moth       | Pseudeustrotia carneola        |          12 |          2 | -83.3%      |                 9 |                2 | Declining   | NEEDS REVIEW    |
 |  20 | Kuschelina barberi                    | Kuschelina barberi             |          17 |          3 | -82.4%      |                 2 |                1 | Declining   | OBSERVER EFFECT |
-|  21 | Euchaetes                             | Euchaetes                      |          11 |          2 | -81.8%      |                 8 |                2 | Declining   | NEEDS REVIEW    |
-|  22 | Pine needle aphid                     | Eulachnus rileyi               |          11 |          2 | -81.8%      |                 6 |                2 | Declining   | NEEDS REVIEW    |
-|  23 | Coppery leafhopper                    | Jikradia olitoria              |          11 |          2 | -81.8%      |                 1 |                1 | Declining   | OBSERVER EFFECT |
+|  21 | Coppery leafhopper                    | Jikradia olitoria              |          11 |          2 | -81.8%      |                 1 |                1 | Declining   | OBSERVER EFFECT |
+|  22 | Euchaetes                             | Euchaetes                      |          11 |          2 | -81.8%      |                 8 |                2 | Declining   | NEEDS REVIEW    |
+|  23 | Pine needle aphid                     | Eulachnus rileyi               |          11 |          2 | -81.8%      |                 6 |                2 | Declining   | NEEDS REVIEW    |
 |  24 | Charcoal seed bug                     | Melacoryphus lateralis         |          31 |          6 | -80.6%      |                22 |                5 | Declining   | HIGH CONFIDENCE |
 |  25 | Arctic fritillary                     | Boloria chariclea              |          38 |          8 | -78.9%      |                15 |                5 | Declining   | HIGH CONFIDENCE |
 |  26 | Colorful zale moth                    | Zale minerea                   |          14 |          3 | -78.6%      |                 6 |                3 | Declining   | NEEDS REVIEW    |
@@ -108,8 +108,8 @@ Species are ranked within each group by severity of decline (worst first).
 |  30 | Diamesinae                            | Diamesinae                     |          18 |          4 | -77.8%      |                 1 |                4 | Declining   | OBSERVER EFFECT |
 |  31 | Black swallowtail                     | Papilio polyxenes              |         102 |         24 | -76.5%      |                80 |               17 | Declining   | HIGH CONFIDENCE |
 |  32 | Lycus sanguinipennis                  | Lycus sanguinipennis           |          31 |          8 | -74.2%      |                26 |                7 | Declining   | HIGH CONFIDENCE |
-|  33 | St. lawrence tiger moth               | Arctia parthenos               |          11 |          3 | -72.7%      |                10 |                3 | Declining   | HIGH CONFIDENCE |
-|  34 | Thecophora                            | Thecophora                     |          11 |          3 | -72.7%      |                 9 |                3 | Declining   | NEEDS REVIEW    |
+|  33 | Thecophora                            | Thecophora                     |          11 |          3 | -72.7%      |                 9 |                3 | Declining   | NEEDS REVIEW    |
+|  34 | St. lawrence tiger moth               | Arctia parthenos               |          11 |          3 | -72.7%      |                10 |                3 | Declining   | HIGH CONFIDENCE |
 |  35 | Coral hairstreak                      | Satyrium titus                 |          18 |          5 | -72.2%      |                10 |                4 | Declining   | HIGH CONFIDENCE |
 |  36 | Alfalfa looper moth                   | Tathorhynchus exsiccata        |          17 |          5 | -70.6%      |                13 |                5 | Declining   | HIGH CONFIDENCE |
 |  37 | Little black ants                     | Monomorium carbonarium         |          10 |          3 | -70.0%      |                 3 |                3 | Declining   | OBSERVER EFFECT |
@@ -132,8 +132,8 @@ Species are ranked within each group by severity of decline (worst first).
 |  54 | Snowberry clearwing                   | Hemaris diffinis               |          20 |          9 | -55.0%      |                15 |                9 | Declining   | HIGH CONFIDENCE |
 |  55 | Schinia mortua                        | Schinia mortua                 |          11 |          5 | -54.5%      |                 5 |                4 | Declining   | NEEDS REVIEW    |
 |  56 | Pallid-winged grasshopper             | Trimerotropis pallidipennis    |          24 |         11 | -54.2%      |                21 |               11 | Declining   | HIGH CONFIDENCE |
-|  57 | Western conifer looper                | Caripeta aequaliaria           |          17 |          8 | -52.9%      |                 9 |                6 | Declining   | NEEDS REVIEW    |
-|  58 | Zigzag furcula moth                   | Furcula scolopendrina          |          17 |          8 | -52.9%      |                 7 |                4 | Declining   | NEEDS REVIEW    |
+|  57 | Zigzag furcula moth                   | Furcula scolopendrina          |          17 |          8 | -52.9%      |                 7 |                4 | Declining   | NEEDS REVIEW    |
+|  58 | Western conifer looper                | Caripeta aequaliaria           |          17 |          8 | -52.9%      |                 9 |                6 | Declining   | NEEDS REVIEW    |
 |  59 | Parallel leafcutter bee               | Megachile parallela            |          25 |         12 | -52.0%      |                20 |               11 | Declining   | HIGH CONFIDENCE |
 |  60 | Estigmene albida                      | Estigmene albida               |          12 |          6 | -50.0%      |                11 |                6 | Declining   | HIGH CONFIDENCE |
 |  61 | Arctic blue                           | Agriades glandon               |          60 |         32 | -46.7%      |                31 |               16 | Declining   | HIGH CONFIDENCE |
@@ -191,8 +191,8 @@ Species are ranked within each group by severity of decline (worst first).
 |  24 | Plains fleabane            | Erigeron modestus         |          58 |         28 | -51.7%      |                50 |               25 | Declining   | HIGH CONFIDENCE |
 |  25 | Sweet violet               | Viola odorata             |          29 |         14 | -51.7%      |                27 |               13 | Declining   | HIGH CONFIDENCE |
 |  26 | Sudetic lousewort          | Pedicularis sudetica      |          18 |          9 | -50.0%      |                16 |                8 | Declining   | HIGH CONFIDENCE |
-|  27 | Orange day-lily            | Hemerocallis fulva        |          10 |          5 | -50.0%      |                10 |                5 | Declining   | HIGH CONFIDENCE |
-|  28 | Bird cherry                | Prunus padus              |          14 |          7 | -50.0%      |                14 |                7 | Declining   | HIGH CONFIDENCE |
+|  27 | Bird cherry                | Prunus padus              |          14 |          7 | -50.0%      |                14 |                7 | Declining   | HIGH CONFIDENCE |
+|  28 | Orange day-lily            | Hemerocallis fulva        |          10 |          5 | -50.0%      |                10 |                5 | Declining   | HIGH CONFIDENCE |
 |  29 | Dwarf phlox                | Phlox condensata          |          37 |         19 | -48.6%      |                27 |               16 | Declining   | HIGH CONFIDENCE |
 |  30 | Annual honesty             | Lunaria annua             |          32 |         17 | -46.9%      |                23 |               14 | Declining   | HIGH CONFIDENCE |
 |  31 | Strawberry goosefoot       | Blitum virgatum           |          15 |          8 | -46.7%      |                13 |                8 | Declining   | HIGH CONFIDENCE |
@@ -216,7 +216,7 @@ Species are ranked within each group by severity of decline (worst first).
 |   1 | Mountain goat          | Oreamnos americanus |         137 |         43 | -68.6%   |                93 |               37 | Declining | HIGH CONFIDENCE |
 |   2 | Long-tailed weasel     | Neogale frenata     |          17 |          6 | -64.7%   |                17 |                6 | Declining | HIGH CONFIDENCE |
 |   3 | Domestic cat           | Felis catus         |          20 |          9 | -55.0%   |                13 |                8 | Declining | HIGH CONFIDENCE |
-|   4 | Western meadow vole    | Microtus drummondii |          37 |         21 | -43.2%   |                34 |               16 | Declining | HIGH CONFIDENCE |
+|   4 | Western meadow vole    | Microtus drummondii |          36 |         21 | -41.7%   |                33 |               16 | Declining | HIGH CONFIDENCE |
 |   5 | Northern pocket gopher | Thomomys talpoides  |          12 |          7 | -41.7%   |                10 |                6 | Declining | HIGH CONFIDENCE |
 
 
@@ -227,7 +227,7 @@ Species are ranked within each group by severity of decline (worst first).
 |   1 | Grass spiders              | Agelenopsis           |         175 |          0 | Disappeared |               133 |              169 | Disappeared | HIGH CONFIDENCE |
 |   2 | Peckhamia americana        | Peckhamia americana   |          24 |          0 | Disappeared |                 2 |                0 | Disappeared | OBSERVER EFFECT |
 |   3 | Whirligig mites            | Anystis               |          28 |          0 | Disappeared |                16 |               22 | Disappeared | HIGH CONFIDENCE |
-|   4 | Hololena                   | Hololena              |          15 |          0 | Disappeared |                15 |               48 | Disappeared | HIGH CONFIDENCE |
+|   4 | Hololena                   | Hololena              |          16 |          0 | Disappeared |                16 |               47 | Disappeared | HIGH CONFIDENCE |
 |   5 | Ebo                        | Ebo                   |          11 |          0 | Disappeared |                10 |               21 | Disappeared | HIGH CONFIDENCE |
 |   6 | Pelegrina sabinema         | Pelegrina sabinema    |          24 |          1 | -95.8%      |                 3 |                1 | Declining   | OBSERVER EFFECT |
 |   7 | Pelegrina arizonensis      | Pelegrina arizonensis |          17 |          4 | -76.5%      |                 5 |                3 | Declining   | NEEDS REVIEW    |
@@ -286,14 +286,15 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Condylostylus caudatus** (*Condylostylus caudatus*): Recorded by **21 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
 - **Diplotaxis** (*Diplotaxis*): Recorded by **19 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
 - **Whirligig mites** (*Anystis*): Recorded by **16 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
-- **Curve-billed thrasher** (*Toxostoma curvirostre*): Recorded by **11 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
 - **Yellow-billed loon** (*Gavia adamsii*): Recorded by **14 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
-- **Hololena** (*Hololena*): Recorded by **15 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
+- **Curve-billed thrasher** (*Toxostoma curvirostre*): Recorded by **11 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
+- **Hololena** (*Hololena*): Recorded by **16 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
 - **Glossy ibis** (*Plegadis falcinellus*): Recorded by **10 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
 - **Ebo** (*Ebo*): Recorded by **10 independent observers** last year; now has **zero observations**. Less likely to be observer noise.
 - **Chryxus arctic** (*Oeneis chryxus*): Recorded by **22 independent observers** last year; now down **98%**. Less likely to be observer noise.
-- **White-winged scoter** (*Melanitta deglandi*): Recorded by **13 independent observers** last year; now down **93%**. Less likely to be observer noise.
 - **Oak-loving gymnopus** (*Gymnopus dryophilus*): Recorded by **11 independent observers** last year; now down **93%**. Less likely to be observer noise.
+- **White-winged scoter** (*Melanitta deglandi*): Recorded by **13 independent observers** last year; now down **93%**. Less likely to be observer noise.
+- **Varied thrush** (*Ixoreus naevius*): Recorded by **12 independent observers** last year; now down **92%**. Less likely to be observer noise.
 - **Sphragisticus nebulosus** (*Sphragisticus nebulosus*): Recorded by **30 independent observers** last year; now down **90%**. Less likely to be observer noise.
 - **Crown rust** (*Puccinia coronata*): Recorded by **13 independent observers** last year; now down **89%**. Less likely to be observer noise.
 - **Colorado hairstreak** (*Hypaurotis crysalus*): Recorded by **16 independent observers** last year; now down **88%**. Less likely to be observer noise.
@@ -302,7 +303,6 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Swainson's thrush** (*Catharus ustulatus*): Recorded by **11 independent observers** last year; now down **85%**. Less likely to be observer noise.
 - **White slant-line** (*Tetracis cachexiata*): Recorded by **10 independent observers** last year; now down **83%**. Less likely to be observer noise.
 - **Spring orange peel fungus** (*Caloscypha fulgens*): Recorded by **17 independent observers** last year; now down **83%**. Less likely to be observer noise.
-- **Varied thrush** (*Ixoreus naevius*): Recorded by **11 independent observers** last year; now down **82%**. Less likely to be observer noise.
 - **Purple spindles** (*Alloclavaria purpurea*): Recorded by **13 independent observers** last year; now down **81%**. Less likely to be observer noise.
 - **Interior sandbar willow** (*Salix interior*): Recorded by **28 independent observers** last year; now down **81%**. Less likely to be observer noise.
 - **Charcoal seed bug** (*Melacoryphus lateralis*): Recorded by **22 independent observers** last year; now down **81%**. Less likely to be observer noise.
@@ -317,8 +317,8 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Perennial fringed gentian** (*Gentianopsis barbellata*): Recorded by **14 independent observers** last year; now down **73%**. Less likely to be observer noise.
 - **St. lawrence tiger moth** (*Arctia parthenos*): Recorded by **10 independent observers** last year; now down **73%**. Less likely to be observer noise.
 - **Coral hairstreak** (*Satyrium titus*): Recorded by **10 independent observers** last year; now down **72%**. Less likely to be observer noise.
-- **Alfalfa looper moth** (*Tathorhynchus exsiccata*): Recorded by **13 independent observers** last year; now down **71%**. Less likely to be observer noise.
 - **Cassin's finch** (*Haemorhous cassinii*): Recorded by **11 independent observers** last year; now down **71%**. Less likely to be observer noise.
+- **Alfalfa looper moth** (*Tathorhynchus exsiccata*): Recorded by **13 independent observers** last year; now down **71%**. Less likely to be observer noise.
 - **Yellow-bellied sapsucker** (*Sphyrapicus varius*): Recorded by **15 independent observers** last year; now down **70%**. Less likely to be observer noise.
 - **Crocus geometer moths** (*Xanthotype*): Recorded by **11 independent observers** last year; now down **69%**. Less likely to be observer noise.
 - **Eastern screech-owl** (*Megascops asio*): Recorded by **25 independent observers** last year; now down **69%**. Less likely to be observer noise.
@@ -327,9 +327,9 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Mountain goat** (*Oreamnos americanus*): Recorded by **93 independent observers** last year; now down **69%**. Less likely to be observer noise.
 - **Pipsissewa** (*Chimaphila umbellata*): Recorded by **20 independent observers** last year; now down **68%**. Less likely to be observer noise.
 - **Virginia's warbler** (*Leiothlypis virginiae*): Recorded by **11 independent observers** last year; now down **67%**. Less likely to be observer noise.
-- **Long-tailed weasel** (*Neogale frenata*): Recorded by **17 independent observers** last year; now down **65%**. Less likely to be observer noise.
-- **Eared grebe** (*Podiceps nigricollis*): Recorded by **18 independent observers** last year; now down **65%**. Less likely to be observer noise.
 - **Lesser house fly** (*Fannia canicularis*): Recorded by **11 independent observers** last year; now down **65%**. Less likely to be observer noise.
+- **Eared grebe** (*Podiceps nigricollis*): Recorded by **18 independent observers** last year; now down **65%**. Less likely to be observer noise.
+- **Long-tailed weasel** (*Neogale frenata*): Recorded by **17 independent observers** last year; now down **65%**. Less likely to be observer noise.
 - **North american tarnished plant bug** (*Lygus lineolaris*): Recorded by **14 independent observers** last year; now down **65%**. Less likely to be observer noise.
 - **American yellow morel** (*Morchella americana*): Recorded by **11 independent observers** last year; now down **64%**. Less likely to be observer noise.
 - **Northern leopard frog** (*Lithobates pipiens*): Recorded by **29 independent observers** last year; now down **64%**. Less likely to be observer noise.
@@ -345,9 +345,9 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Nodding beggarticks** (*Bidens cernua*): Recorded by **14 independent observers** last year; now down **57%**. Less likely to be observer noise.
 - **Common house fly** (*Musca domestica*): Recorded by **21 independent observers** last year; now down **56%**. Less likely to be observer noise.
 - **Douglas-fir tussock moth** (*Orgyia pseudotsugata*): Recorded by **156 independent observers** last year; now down **55%**. Less likely to be observer noise.
-- **Domestic cat** (*Felis catus*): Recorded by **13 independent observers** last year; now down **55%**. Less likely to be observer noise.
-- **Sticky geranium** (*Geranium viscosissimum*): Recorded by **36 independent observers** last year; now down **55%**. Less likely to be observer noise.
 - **Snowberry clearwing** (*Hemaris diffinis*): Recorded by **15 independent observers** last year; now down **55%**. Less likely to be observer noise.
+- **Sticky geranium** (*Geranium viscosissimum*): Recorded by **36 independent observers** last year; now down **55%**. Less likely to be observer noise.
+- **Domestic cat** (*Felis catus*): Recorded by **13 independent observers** last year; now down **55%**. Less likely to be observer noise.
 - **Pallid-winged grasshopper** (*Trimerotropis pallidipennis*): Recorded by **21 independent observers** last year; now down **54%**. Less likely to be observer noise.
 - **Kidneyleaf white violet** (*Viola renifolia*): Recorded by **12 independent observers** last year; now down **54%**. Less likely to be observer noise.
 - **Short-stemmed russula** (*Russula brevipes*): Recorded by **18 independent observers** last year; now down **53%**. Less likely to be observer noise.
@@ -356,14 +356,14 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Plains fleabane** (*Erigeron modestus*): Recorded by **50 independent observers** last year; now down **52%**. Less likely to be observer noise.
 - **Sweet violet** (*Viola odorata*): Recorded by **27 independent observers** last year; now down **52%**. Less likely to be observer noise.
 - **Sudetic lousewort** (*Pedicularis sudetica*): Recorded by **16 independent observers** last year; now down **50%**. Less likely to be observer noise.
+- **Bird cherry** (*Prunus padus*): Recorded by **14 independent observers** last year; now down **50%**. Less likely to be observer noise.
 - **Orange day-lily** (*Hemerocallis fulva*): Recorded by **10 independent observers** last year; now down **50%**. Less likely to be observer noise.
 - **Estigmene albida** (*Estigmene albida*): Recorded by **11 independent observers** last year; now down **50%**. Less likely to be observer noise.
-- **Bird cherry** (*Prunus padus*): Recorded by **14 independent observers** last year; now down **50%**. Less likely to be observer noise.
 - **Dwarf phlox** (*Phlox condensata*): Recorded by **27 independent observers** last year; now down **49%**. Less likely to be observer noise.
 - **Annual honesty** (*Lunaria annua*): Recorded by **23 independent observers** last year; now down **47%**. Less likely to be observer noise.
 - **Arctic blue** (*Agriades glandon*): Recorded by **31 independent observers** last year; now down **47%**. Less likely to be observer noise.
-- **Strawberry goosefoot** (*Blitum virgatum*): Recorded by **13 independent observers** last year; now down **47%**. Less likely to be observer noise.
 - **Rathke's woodlouse** (*Trachelipus rathkii*): Recorded by **11 independent observers** last year; now down **47%**. Less likely to be observer noise.
+- **Strawberry goosefoot** (*Blitum virgatum*): Recorded by **13 independent observers** last year; now down **47%**. Less likely to be observer noise.
 - **Small-flower beardtongue** (*Penstemon procerus*): Recorded by **21 independent observers** last year; now down **47%**. Less likely to be observer noise.
 - **Four-spurred assassin bug** (*Zelus tetracanthus*): Recorded by **12 independent observers** last year; now down **46%**. Less likely to be observer noise.
 - **Poplar twiggall fly** (*Euhexomyza schineri*): Recorded by **10 independent observers** last year; now down **46%**. Less likely to be observer noise.
@@ -376,15 +376,15 @@ The following 111 species were recorded by 10 or more independent observers in t
 - **Three-banded grasshopper** (*Hadrotettix trifasciatus*): Recorded by **12 independent observers** last year; now down **44%**. Less likely to be observer noise.
 - **Thinker moth** (*Lacinipolia meditata*): Recorded by **10 independent observers** last year; now down **44%**. Less likely to be observer noise.
 - **Draco skipper** (*Polites draco*): Recorded by **13 independent observers** last year; now down **44%**. Less likely to be observer noise.
-- **Western meadow vole** (*Microtus drummondii*): Recorded by **34 independent observers** last year; now down **43%**. Less likely to be observer noise.
 - **Brown-capped rosy-finch** (*Leucosticte australis*): Recorded by **13 independent observers** last year; now down **43%**. Less likely to be observer noise.
 - **Eastern black carpenter ant** (*Camponotus pennsylvanicus*): Recorded by **20 independent observers** last year; now down **42%**. Less likely to be observer noise.
 - **Alpine springbeauty** (*Claytonia megarhiza*): Recorded by **106 independent observers** last year; now down **42%**. Less likely to be observer noise.
 - **Isabella tiger moth** (*Pyrrharctia isabella*): Recorded by **57 independent observers** last year; now down **42%**. Less likely to be observer noise.
+- **Western meadow vole** (*Microtus drummondii*): Recorded by **33 independent observers** last year; now down **42%**. Less likely to be observer noise.
 - **Northern pocket gopher** (*Thomomys talpoides*): Recorded by **10 independent observers** last year; now down **42%**. Less likely to be observer noise.
-- **Golden saxifrage** (*Saxifraga chrysantha*): Recorded by **11 independent observers** last year; now down **42%**. Less likely to be observer noise.
 - **Deceiver** (*Laccaria laccata*): Recorded by **12 independent observers** last year; now down **42%**. Less likely to be observer noise.
 - **Club-horned grasshopper** (*Aeropedellus clavatus*): Recorded by **10 independent observers** last year; now down **42%**. Less likely to be observer noise.
+- **Golden saxifrage** (*Saxifraga chrysantha*): Recorded by **11 independent observers** last year; now down **42%**. Less likely to be observer noise.
 - **Showy alpine ragwort** (*Senecio amplectens*): Recorded by **12 independent observers** last year; now down **41%**. Less likely to be observer noise.
 - **Northern rough-winged swallow** (*Stelgidopteryx serripennis*): Recorded by **21 independent observers** last year; now down **41%**. Less likely to be observer noise.
 - **Siberian crabapple** (*Malus baccata*): Recorded by **74 independent observers** last year; now down **41%**. Less likely to be observer noise.
@@ -408,6 +408,25 @@ A drop in observation counts does not automatically mean a species is disappeari
 **'Disappeared' species deserve the most attention.** A species dropping from dozens of observations to zero is a strong signal that something changed — even if that change turns out to be observer-driven rather than ecological.
 
 In this report, **Insects** has the most flagged species (83). This may reflect a real ecological pattern, or it may reflect that this taxonomic group has the most observers and thus shows the most variance. Cross-referencing with other data sources is recommended before drawing conclusions.
+
+---
+
+## Methodology Validation
+
+To test whether the flagged declines reflect real ecological change or observer dropout, we randomly sampled **100 stable species** (those with ≥10 prior observations that did *not* decline) and compared how well each group retained its prior-period observers into the current period. If declining species lost observers at roughly the same rate as stable species, the declines may be an artifact of reduced observer participation rather than ecological signal.
+
+**Observer retention = current unique observers ÷ prior unique observers**  
+*(Control sample uses a fixed random seed for reproducibility.)*
+
+| Group | Species | Avg Observer Retention |
+|-------|---------|------------------------|
+| Control — stable species (random sample, seed=42) | 100 | 157.2% |
+| Flagged species — HIGH CONFIDENCE only | 111 | 55.7% |
+| Difference | — | **+102 percentage points** |
+
+**FINDING: Declines appear ecological rather than observer-driven**
+
+Stable species retained an average of **157.2%** of their prior-period observers. High-confidence declining species retained only **55.7%** — a gap of **102 percentage points**. If the declines were simply caused by observers dropping out, both groups would show similar retention rates. The large gap indicates that declining species genuinely lost the dedicated observers who recorded them — a pattern consistent with real ecological change rather than random observer drift.
 
 ---
 
