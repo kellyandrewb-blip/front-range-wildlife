@@ -156,6 +156,22 @@ def fetch_species_counts(d1: date, d2: date, label: str) -> pd.DataFrame:
     return df.sort_values("count", ascending=False).reset_index(drop=True)
 
 
+def fetch_regional_observers(d1: date, d2: date) -> int:
+    """
+    Return the total number of unique observers active in the region
+    for a given date range. No taxon filter — this is the region-wide total.
+
+    A single lightweight call: per_page=1 since we only need total_results.
+    """
+    data = get("observations/observers", {
+        **LOCATION_PARAMS,
+        "d1":       d1.isoformat(),
+        "d2":       d2.isoformat(),
+        "per_page": 1,
+    })
+    return data.get("total_results", 0)
+
+
 def fetch_observer_counts(decline_df: pd.DataFrame) -> pd.DataFrame:
     """
     For each flagged species, fetch the number of unique observers in both
@@ -283,10 +299,12 @@ def build_decline_table(prior_df: pd.DataFrame, current_df: pd.DataFrame) -> pd.
 # ---------------------------------------------------------------------------
 
 def write_report(
-    prior_total:    int,
-    current_total:  int,
-    prior_analyzed: int,
-    decline_df:     pd.DataFrame,
+    prior_total:          int,
+    current_total:        int,
+    prior_analyzed:       int,
+    decline_df:           pd.DataFrame,
+    prior_observers_total:   int = 0,
+    current_observers_total: int = 0,
 ) -> None:
     """
     Write declining_species.md.
@@ -326,6 +344,53 @@ def write_report(
         "---",
         "",
     ]
+
+    # ------------------------------------------------------------------
+    # REGIONAL OBSERVER PARTICIPATION
+    # ------------------------------------------------------------------
+    if prior_observers_total > 0:
+        obs_change     = current_observers_total - prior_observers_total
+        obs_pct        = round(obs_change / prior_observers_total * 100, 1)
+        obs_change_str = f"{obs_pct:+.1f}%"
+
+        if obs_pct <= -10:
+            obs_note = (
+                f"Observer participation is down {abs(obs_pct):.0f}% region-wide. "
+                "This is a meaningful drop in community activity and likely explains "
+                "a portion of the species-level declines below — fewer people in the "
+                "field means fewer sightings of everything, not just struggling species."
+            )
+        elif obs_pct >= 10:
+            obs_note = (
+                f"Observer participation is up {abs(obs_pct):.0f}% region-wide. "
+                "More people in the field means more sightings overall, so any "
+                "species-level declines below are occurring despite increased observer "
+                "effort — making them more ecologically significant, not less."
+            )
+        else:
+            obs_note = (
+                f"Observer participation is roughly stable ({obs_change_str} region-wide). "
+                "Overall effort has not changed meaningfully between periods, so "
+                "species-level declines are less likely to be explained by fewer "
+                "people submitting observations."
+            )
+
+        lines += [
+            "## Regional Observer Participation",
+            "",
+            f"| Period | Unique Observers |",
+            f"|--------|-----------------|",
+            f"| Prior ({prior_start.strftime('%b %Y')} – {prior_end.strftime('%b %Y')}) "
+            f"| {prior_observers_total:,} |",
+            f"| Current ({current_start.strftime('%b %Y')} – {current_end.strftime('%b %Y')}) "
+            f"| {current_observers_total:,} |",
+            f"| Change | **{obs_change_str}** |",
+            "",
+            f"*{obs_note}*",
+            "",
+            "---",
+            "",
+        ]
 
     # ------------------------------------------------------------------
     # SUMMARY
@@ -605,17 +670,26 @@ def main():
     print(f"         NEEDS REVIEW    : {n_review}")
     print(f"         OBSERVER EFFECT : {n_noise}\n")
 
-    # Step 5: Write report
-    print("[5/5] Writing report...")
+    # Step 5: Fetch regional observer totals (2 lightweight calls)
+    print("[5/5] Fetching regional observer totals and writing report...")
+    prior_observers_total   = fetch_regional_observers(prior_start, prior_end)
+    time.sleep(REQUEST_PAUSE)
+    current_observers_total = fetch_regional_observers(current_start, current_end)
+    obs_pct = round((current_observers_total - prior_observers_total)
+                    / prior_observers_total * 100, 1) if prior_observers_total else 0
+    print(f"      Prior observers : {prior_observers_total:,}")
+    print(f"      Current observers: {current_observers_total:,}  ({obs_pct:+.1f}%)\n")
 
     prior_total   = prior_df["count"].sum() if not prior_df.empty else 0
     current_total = current_df["count"].sum() if not current_df.empty else 0
 
     write_report(
-        prior_total    = prior_total,
-        current_total  = current_total,
-        prior_analyzed = len(prior_filtered),
-        decline_df     = decline_df,
+        prior_total             = prior_total,
+        current_total           = current_total,
+        prior_analyzed          = len(prior_filtered),
+        decline_df              = decline_df,
+        prior_observers_total   = prior_observers_total,
+        current_observers_total = current_observers_total,
     )
 
     print()

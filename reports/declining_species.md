@@ -5,7 +5,19 @@
 **Current period:** 2025-03-15 to 2026-03-15  
 **Decline threshold:** 40% or greater drop  
 **Minimum prior observations:** 10  
-**Report generated:** 2026-03-15
+**Report generated:** 2026-03-16
+
+---
+
+## Regional Observer Participation
+
+| Period | Unique Observers |
+|--------|-----------------|
+| Prior (Mar 2024 – Mar 2025) | 10,895 |
+| Current (Mar 2025 – Mar 2026) | 11,479 |
+| Change | **+5.4%** |
+
+*Observer participation is roughly stable (+5.4% region-wide). Overall effort has not changed meaningfully between periods, so species-level declines are less likely to be explained by fewer people submitting observations.*
 
 ---
 
