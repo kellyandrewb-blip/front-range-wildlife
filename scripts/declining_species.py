@@ -214,6 +214,70 @@ def fetch_observer_counts(decline_df: pd.DataFrame) -> pd.DataFrame:
     return result
 
 
+def build_control_sample(
+    prior_filtered: pd.DataFrame,
+    decline_df:     pd.DataFrame,
+    n:              int = 100,
+    seed:           int = 42,
+) -> pd.DataFrame:
+    """
+    Randomly sample n stable species from the prior-period list for use as a
+    control group in methodology validation.
+
+    "Stable" means the species was in prior_filtered (>= MIN_PRIOR_OBS observations)
+    but was NOT flagged as declining or disappeared in decline_df.
+
+    Uses a fixed random seed so the same 100 species are selected every run.
+    """
+    flagged_ids = set(decline_df["taxon_id"])
+    stable = prior_filtered[~prior_filtered["taxon_id"].isin(flagged_ids)].copy()
+
+    sample_size = min(n, len(stable))
+    return stable.sample(sample_size, random_state=seed).reset_index(drop=True)
+
+
+def fetch_control_observer_counts(control_sample: pd.DataFrame) -> pd.DataFrame:
+    """
+    Fetch prior- and current-period unique observer counts for the control sample.
+
+    Identical API call pattern to fetch_observer_counts(), but targets stable
+    species rather than flagged ones. Progress is printed every 10 species to
+    keep the console readable across ~200 API calls.
+
+    Returns the input DataFrame with two new columns added:
+        prior_observers, current_observers
+    """
+    total       = len(control_sample)
+    prior_obs   = {}
+    current_obs = {}
+
+    for i, (_, row) in enumerate(control_sample.iterrows(), start=1):
+        tid  = row["taxon_id"]
+        name = row["display_name"]
+
+        base_params = {**LOCATION_PARAMS, "taxon_id": tid, "per_page": 1}
+
+        prior_data   = get("observations/observers", {**base_params,
+                           "d1": prior_start.isoformat(), "d2": prior_end.isoformat()})
+        time.sleep(0.7)
+
+        current_data = get("observations/observers", {**base_params,
+                           "d1": current_start.isoformat(), "d2": current_end.isoformat()})
+        time.sleep(0.7)
+
+        prior_obs[tid]   = prior_data.get("total_results", 0)
+        current_obs[tid] = current_data.get("total_results", 0)
+
+        if i % 10 == 0 or i == total:
+            print(f"  [{i}/{total}] ...{name} "
+                  f"(prior {prior_obs[tid]} / current {current_obs[tid]})")
+
+    result = control_sample.copy()
+    result["prior_observers"]   = result["taxon_id"].map(prior_obs)
+    result["current_observers"] = result["taxon_id"].map(current_obs)
+    return result
+
+
 def assign_credibility(prior_observers: int) -> str:
     """
     Assign a credibility tier based on prior-period unique observer count.
@@ -295,6 +359,99 @@ def build_decline_table(prior_df: pd.DataFrame, current_df: pd.DataFrame) -> pd.
 
 
 # ---------------------------------------------------------------------------
+# METHODOLOGY VALIDATION
+# ---------------------------------------------------------------------------
+
+def build_validation_section(
+    control_sample: pd.DataFrame,
+    decline_df:     pd.DataFrame,
+) -> list:
+    """
+    Compare observer retention between stable (control) species and HIGH CONFIDENCE
+    flagged species to determine whether declines are ecological or observer-driven.
+
+    Observer retention = current_observers / prior_observers.
+
+    A gap of 15+ percentage points between the two groups is taken as evidence
+    that the declines are ecological. A smaller gap warrants a caution note.
+
+    Returns a list of Markdown lines to be inserted into the report before
+    the Data Limitations section.
+    """
+    # Control group: drop any species where prior_observers == 0 (can't compute ratio)
+    control_valid = control_sample[control_sample["prior_observers"] > 0].copy()
+    control_valid["retention"] = (
+        control_valid["current_observers"] / control_valid["prior_observers"]
+    )
+    control_retention = round(control_valid["retention"].mean() * 100, 1)
+    n_control = len(control_valid)
+
+    # High-confidence flagged species: same filter
+    high_conf = decline_df[decline_df["credibility"] == "HIGH CONFIDENCE"].copy()
+    high_conf_valid = high_conf[high_conf["prior_observers"] > 0].copy()
+    high_conf_valid["retention"] = (
+        high_conf_valid["current_observers"] / high_conf_valid["prior_observers"]
+    )
+    flagged_retention = round(high_conf_valid["retention"].mean() * 100, 1)
+    n_flagged = len(high_conf_valid)
+
+    # Gap: positive means control retained more observers than flagged species (expected)
+    gap = round(control_retention - flagged_retention, 1)
+
+    if gap >= 15:
+        verdict_label = "FINDING: Declines appear ecological rather than observer-driven"
+        verdict_body = (
+            f"Stable species retained an average of **{control_retention}%** of their "
+            f"prior-period observers. High-confidence declining species retained only "
+            f"**{flagged_retention}%** — a gap of **{gap:.0f} percentage points**. "
+            "If the declines were simply caused by observers dropping out, both groups "
+            "would show similar retention rates. The large gap indicates that declining "
+            "species genuinely lost the dedicated observers who recorded them — a pattern "
+            "consistent with real ecological change rather than random observer drift."
+        )
+    else:
+        verdict_label = "CAUTION: Observer drift may partially explain these findings"
+        verdict_body = (
+            f"Stable species retained an average of **{control_retention}%** of their "
+            f"prior-period observers. High-confidence declining species retained "
+            f"**{flagged_retention}%** — a gap of only **{abs(gap):.0f} percentage "
+            "points**. This small difference means both declining and stable species lost "
+            "observers at roughly similar rates. Some or all of the observed declines may "
+            "reflect reduced individual observer activity rather than genuine ecological "
+            "change. These findings warrant additional verification before drawing "
+            "conservation conclusions."
+        )
+
+    return [
+        "## Methodology Validation",
+        "",
+        "To test whether the flagged declines reflect real ecological change or observer "
+        f"dropout, we randomly sampled **{len(control_sample)} stable species** (those with "
+        f"≥{MIN_PRIOR_OBS} prior observations that did *not* decline) and compared how well "
+        "each group retained its prior-period observers into the current period. "
+        "If declining species lost observers at roughly the same rate as stable species, "
+        "the declines may be an artifact of reduced observer participation rather than "
+        "ecological signal.",
+        "",
+        "**Observer retention = current unique observers ÷ prior unique observers**  ",
+        f"*(Control sample uses a fixed random seed for reproducibility.)*",
+        "",
+        "| Group | Species | Avg Observer Retention |",
+        "|-------|---------|------------------------|",
+        f"| Control — stable species (random sample, seed=42) | {n_control} | {control_retention}% |",
+        f"| Flagged species — HIGH CONFIDENCE only | {n_flagged} | {flagged_retention}% |",
+        f"| Difference | — | **{gap:+.0f} percentage points** |",
+        "",
+        f"**{verdict_label}**",
+        "",
+        verdict_body,
+        "",
+        "---",
+        "",
+    ]
+
+
+# ---------------------------------------------------------------------------
 # REPORT WRITER
 # ---------------------------------------------------------------------------
 
@@ -305,6 +462,7 @@ def write_report(
     decline_df:           pd.DataFrame,
     prior_observers_total:   int = 0,
     current_observers_total: int = 0,
+    validation_lines:        list = None,
 ) -> None:
     """
     Write declining_species.md.
@@ -314,7 +472,8 @@ def write_report(
     2. Ranked tables grouped by taxonomic category (with observer columns)
     3. High confidence findings — one-liner notes for HIGH CONFIDENCE species
     4. Plain-English interpretation
-    5. Data limitations note
+    5. Methodology validation (control sample vs. flagged species observer retention)
+    6. Data limitations note
     """
 
     disappeared   = decline_df[decline_df["status"] == "Disappeared"]
@@ -568,6 +727,13 @@ def write_report(
     lines += ["---", ""]
 
     # ------------------------------------------------------------------
+    # METHODOLOGY VALIDATION  (inserted before Data Limitations so the
+    # reader sees confidence level before the broader caveats)
+    # ------------------------------------------------------------------
+    if validation_lines:
+        lines += validation_lines
+
+    # ------------------------------------------------------------------
     # DATA LIMITATIONS
     # ------------------------------------------------------------------
     lines += [
@@ -621,7 +787,7 @@ def main():
     print()
 
     # Step 1: Fetch prior-period species (full list, all pages)
-    print("[1/4] Fetching all species from the PRIOR period...")
+    print("[1/6] Fetching all species from the PRIOR period...")
     prior_df = fetch_species_counts(prior_start, prior_end, label="prior")
     print(f"      -> {len(prior_df):,} total species found in prior period\n")
 
@@ -631,12 +797,12 @@ def main():
           f"(the rest are too noisy to analyze)\n")
 
     # Step 3: Fetch current-period species (full list, all pages)
-    print("[2/4] Fetching all species from the CURRENT period...")
+    print("[2/6] Fetching all species from the CURRENT period...")
     current_df = fetch_species_counts(current_start, current_end, label="current")
     print(f"      -> {len(current_df):,} total species found in current period\n")
 
     # Step 4: Compute year-over-year changes and flag declines
-    print("[3/4] Calculating year-over-year changes and flagging declines...")
+    print("[3/6] Calculating year-over-year changes and flagging declines...")
     decline_df = build_decline_table(prior_filtered, current_df)
 
     disappeared = decline_df[decline_df["status"] == "Disappeared"]
@@ -657,7 +823,7 @@ def main():
         print()
 
     # Step 4: Fetch observer counts for each flagged species (2 calls per species)
-    print(f"[4/5] Fetching observer counts for {len(decline_df)} flagged species "
+    print(f"[4/6] Fetching observer counts for {len(decline_df)} flagged species "
           f"({len(decline_df) * 2} API calls)...")
     decline_df = fetch_observer_counts(decline_df)
     decline_df["credibility"] = decline_df["prior_observers"].apply(assign_credibility)
@@ -671,7 +837,7 @@ def main():
     print(f"         OBSERVER EFFECT : {n_noise}\n")
 
     # Step 5: Fetch regional observer totals (2 lightweight calls)
-    print("[5/5] Fetching regional observer totals and writing report...")
+    print("[5/6] Fetching regional observer totals...")
     prior_observers_total   = fetch_regional_observers(prior_start, prior_end)
     time.sleep(REQUEST_PAUSE)
     current_observers_total = fetch_regional_observers(current_start, current_end)
@@ -683,6 +849,18 @@ def main():
     prior_total   = prior_df["count"].sum() if not prior_df.empty else 0
     current_total = current_df["count"].sum() if not current_df.empty else 0
 
+    # Step 6: Control sample validation (~200 API calls)
+    control_sample = build_control_sample(prior_filtered, decline_df)
+    print(f"\n[6/6] Running control sample validation "
+          f"({len(control_sample)} stable species sampled, seed=42, "
+          f"~{len(control_sample) * 2} API calls)...")
+    control_sample  = fetch_control_observer_counts(control_sample)
+    validation_lines = build_validation_section(control_sample, decline_df)
+
+    n_control_valid = len(control_sample[control_sample["prior_observers"] > 0])
+    print(f"\n      Control group: {n_control_valid} species with valid observer data")
+    print("      Writing report...\n")
+
     write_report(
         prior_total             = prior_total,
         current_total           = current_total,
@@ -690,6 +868,7 @@ def main():
         decline_df              = decline_df,
         prior_observers_total   = prior_observers_total,
         current_observers_total = current_observers_total,
+        validation_lines        = validation_lines,
     )
 
     print()
