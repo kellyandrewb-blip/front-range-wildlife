@@ -6,9 +6,11 @@ Identifies species within 50 miles of Highlands Ranch, CO that showed
 a meaningful drop in observations between the prior 12-month period and
 the current 12-month period.
 
-API strategy (same as inat_signal_test.py):
+API strategy:
 - /observations/species_counts  -> full ranked species list, both periods
-- Both lists joined in memory; no per-species API calls needed
+- Both lists joined in memory to identify flagged species
+- /observations/observers       -> unique observer count per flagged species,
+                                   prior + current period (2 calls per species)
 """
 
 import time
@@ -79,11 +81,25 @@ GROUP_ORDER = [
 # ---------------------------------------------------------------------------
 
 def get(endpoint: str, params: dict) -> dict:
-    """Make a single GET request to the iNaturalist API and return JSON."""
+    """
+    Make a single GET request to the iNaturalist API and return JSON.
+
+    Retries up to 3 times on 429 (rate limit) responses, waiting 20 seconds
+    between attempts. All other errors raise immediately.
+    """
     url = f"https://api.inaturalist.org/v1/{endpoint}"
-    resp = requests.get(url, params=params, timeout=30)
+    for attempt in range(3):
+        resp = requests.get(url, params=params, timeout=30)
+        if resp.status_code == 429:
+            wait = 20
+            print(f"\n    [rate limit] waiting {wait}s before retry {attempt + 1}/3...",
+                  end=" ", flush=True)
+            time.sleep(wait)
+            continue
+        resp.raise_for_status()
+        return resp.json()
+    # If all retries exhausted, raise on the last response
     resp.raise_for_status()
-    return resp.json()
 
 
 def fetch_species_counts(d1: date, d2: date, label: str) -> pd.DataFrame:
@@ -138,6 +154,68 @@ def fetch_species_counts(d1: date, d2: date, label: str) -> pd.DataFrame:
 
     df = pd.DataFrame(all_rows)
     return df.sort_values("count", ascending=False).reset_index(drop=True)
+
+
+def fetch_observer_counts(decline_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    For each flagged species, fetch the number of unique observers in both
+    the prior and current periods.
+
+    Uses GET /observations/observers with taxon_id + location + date params.
+    We only need total_results from each response (the unique observer count),
+    so per_page=1 keeps responses tiny.
+
+    One call per species per period = len(decline_df) * 2 total calls.
+    Returns the input DataFrame with two new columns added:
+        prior_observers, current_observers
+    """
+    total     = len(decline_df)
+    prior_obs  = {}
+    current_obs = {}
+
+    for i, (_, row) in enumerate(decline_df.iterrows(), start=1):
+        tid  = row["taxon_id"]
+        name = row["display_name"]
+        print(f"  [{i}/{total}] {name}...", end=" ", flush=True)
+
+        base_params = {**LOCATION_PARAMS, "taxon_id": tid, "per_page": 1}
+
+        prior_data   = get("observations/observers", {**base_params,
+                           "d1": prior_start.isoformat(), "d2": prior_end.isoformat()})
+        time.sleep(0.7)   # slightly longer pause; observers endpoint is stricter than species_counts
+
+        current_data = get("observations/observers", {**base_params,
+                           "d1": current_start.isoformat(), "d2": current_end.isoformat()})
+        time.sleep(0.7)
+
+        prior_obs[tid]   = prior_data.get("total_results", 0)
+        current_obs[tid] = current_data.get("total_results", 0)
+        print(f"prior {prior_obs[tid]} observers / current {current_obs[tid]} observers")
+
+    result = decline_df.copy()
+    result["prior_observers"]   = result["taxon_id"].map(prior_obs)
+    result["current_observers"] = result["taxon_id"].map(current_obs)
+    return result
+
+
+def assign_credibility(prior_observers: int) -> str:
+    """
+    Assign a credibility tier based on prior-period unique observer count.
+
+    The tier tells conservation staff how much to trust the decline signal:
+      HIGH CONFIDENCE  -- 10+ independent observers recorded this species;
+                          a drop is unlikely to be one person stopping
+      NEEDS REVIEW     -- 5-9 observers; some independent signal, warrants
+                          a closer look before acting
+      OBSERVER EFFECT  -- fewer than 5 observers; decline may be explained
+                          by 1-2 people stopping participation
+    """
+    if prior_observers >= 10:
+        return "HIGH CONFIDENCE"
+    elif prior_observers >= 5:
+        return "NEEDS REVIEW"
+    else:
+        return "OBSERVER EFFECT"
 
 
 # ---------------------------------------------------------------------------
@@ -214,15 +292,21 @@ def write_report(
     Write declining_species.md.
 
     Sections:
-    1. Header + summary numbers
-    2. Ranked table grouped by taxonomic category
-    3. Plain-English interpretation
-    4. Data limitations note
+    1. Header + summary numbers (including credibility tier breakdown)
+    2. Ranked tables grouped by taxonomic category (with observer columns)
+    3. High confidence findings — one-liner notes for HIGH CONFIDENCE species
+    4. Plain-English interpretation
+    5. Data limitations note
     """
 
-    disappeared = decline_df[decline_df["status"] == "Disappeared"]
-    declining   = decline_df[decline_df["status"] == "Declining"]
+    disappeared   = decline_df[decline_df["status"] == "Disappeared"]
+    declining     = decline_df[decline_df["status"] == "Declining"]
     total_flagged = len(decline_df)
+
+    # Credibility tier counts for summary
+    n_high   = len(decline_df[decline_df["credibility"] == "HIGH CONFIDENCE"])
+    n_review = len(decline_df[decline_df["credibility"] == "NEEDS REVIEW"])
+    n_noise  = len(decline_df[decline_df["credibility"] == "OBSERVER EFFECT"])
 
     lines = []
 
@@ -257,6 +341,13 @@ def write_report(
         f"**{len(disappeared)}** disappeared entirely, "
         f"**{len(declining)}** declined by {int(DECLINE_THRESHOLD * 100)}% or more",
         "",
+        "**Credibility breakdown** (based on number of independent observers in the prior period):",
+        f"- **HIGH CONFIDENCE ({n_high})** — 10+ prior observers; decline is unlikely to be "
+        f"one person stopping",
+        f"- **NEEDS REVIEW ({n_review})** — 5–9 prior observers; worth a closer look",
+        f"- **OBSERVER EFFECT ({n_noise})** — fewer than 5 prior observers; decline may reflect "
+        f"1–2 people stopping participation",
+        "",
         "---",
         "",
     ]
@@ -269,11 +360,11 @@ def write_report(
         "",
         "Species are ranked within each group by severity of decline (worst first).  ",
         "**Disappeared** = had observations in the prior period, zero in the current period.  ",
-        f"**Declining** = dropped by {int(DECLINE_THRESHOLD * 100)}% or more.",
+        f"**Declining** = dropped by {int(DECLINE_THRESHOLD * 100)}% or more.  ",
+        "**Prior/Curr Observers** = unique people who recorded this species each period.",
         "",
     ]
 
-    # Determine which groups are actually present in the flagged data
     present_groups = [g for g in GROUP_ORDER if g in decline_df["group"].values]
 
     if total_flagged == 0:
@@ -289,11 +380,14 @@ def write_report(
 
             n_disappeared = len(group_df[group_df["status"] == "Disappeared"])
             n_declining   = len(group_df[group_df["status"] == "Declining"])
+            n_high_group  = len(group_df[group_df["credibility"] == "HIGH CONFIDENCE"])
             summary_parts = []
             if n_disappeared:
                 summary_parts.append(f"{n_disappeared} disappeared")
             if n_declining:
                 summary_parts.append(f"{n_declining} declining")
+            if n_high_group:
+                summary_parts.append(f"{n_high_group} high confidence")
 
             lines += [
                 f"### {group}  ({', '.join(summary_parts)})",
@@ -302,11 +396,8 @@ def write_report(
 
             table_rows = []
             for rank, (_, row) in enumerate(group_df.iterrows(), start=1):
-                if row["status"] == "Disappeared":
-                    change_str = "Disappeared"
-                else:
-                    change_str = f"{row['pct_change']:+.1f}%"
-
+                change_str = "Disappeared" if row["status"] == "Disappeared" \
+                             else f"{row['pct_change']:+.1f}%"
                 table_rows.append([
                     rank,
                     row["display_name"],
@@ -314,18 +405,63 @@ def write_report(
                     f"{row['prior_count']:,}",
                     f"{row['current_count']:,}",
                     change_str,
+                    int(row["prior_observers"]),
+                    int(row["current_observers"]),
                     row["status"],
+                    row["credibility"],
                 ])
 
             lines.append(tabulate(
                 table_rows,
                 headers=["#", "Common Name", "Scientific Name",
-                         "Prior Obs", "Current Obs", "Change", "Status"],
+                         "Prior Obs", "Curr Obs", "Change",
+                         "Prior Observers", "Curr Observers",
+                         "Status", "Confidence"],
                 tablefmt="github",
             ))
             lines += ["", ""]
 
     lines += ["---", ""]
+
+    # ------------------------------------------------------------------
+    # HIGH CONFIDENCE FINDINGS
+    # ------------------------------------------------------------------
+    high_conf_df = decline_df[decline_df["credibility"] == "HIGH CONFIDENCE"].copy()
+
+    lines += [
+        "## High Confidence Findings",
+        "",
+    ]
+
+    if high_conf_df.empty:
+        lines.append(
+            "No flagged species had 10 or more prior observers. "
+            "All declines should be treated cautiously."
+        )
+    else:
+        lines.append(
+            f"The following {len(high_conf_df)} species were recorded by 10 or more "
+            "independent observers in the prior period. Their declines are less likely "
+            "to be explained by a single person stopping participation."
+        )
+        lines.append("")
+        for _, row in high_conf_df.iterrows():
+            prior_obs_count = int(row["prior_observers"])
+            if row["status"] == "Disappeared":
+                obs_note = (
+                    f"Recorded by **{prior_obs_count} independent observers** last year; "
+                    f"now has **zero observations**. Less likely to be observer noise."
+                )
+            else:
+                obs_note = (
+                    f"Recorded by **{prior_obs_count} independent observers** last year; "
+                    f"now down **{abs(row['pct_change']):.0f}%**. Less likely to be observer noise."
+                )
+            lines.append(
+                f"- **{row['display_name']}** (*{row['scientific_name']}*): {obs_note}"
+            )
+
+    lines += ["", "---", ""]
 
     # ------------------------------------------------------------------
     # PLAIN-ENGLISH INTERPRETATION
@@ -352,7 +488,6 @@ def write_report(
         "",
     ]
 
-    # Add a brief group-level callout if there are notable patterns
     if total_flagged > 0:
         group_counts = decline_df.groupby("group").size().sort_values(ascending=False)
         top_group    = group_counts.index[0]
@@ -456,8 +591,22 @@ def main():
                   f"{row['prior_count']} -> {row['current_count']} ({change_str})")
         print()
 
-    # Step 5: Fetch totals for the report summary (lightweight calls)
-    print("[4/4] Writing report...")
+    # Step 4: Fetch observer counts for each flagged species (2 calls per species)
+    print(f"[4/5] Fetching observer counts for {len(decline_df)} flagged species "
+          f"({len(decline_df) * 2} API calls)...")
+    decline_df = fetch_observer_counts(decline_df)
+    decline_df["credibility"] = decline_df["prior_observers"].apply(assign_credibility)
+
+    n_high   = len(decline_df[decline_df["credibility"] == "HIGH CONFIDENCE"])
+    n_review = len(decline_df[decline_df["credibility"] == "NEEDS REVIEW"])
+    n_noise  = len(decline_df[decline_df["credibility"] == "OBSERVER EFFECT"])
+    print(f"\n      Credibility breakdown:")
+    print(f"         HIGH CONFIDENCE : {n_high}")
+    print(f"         NEEDS REVIEW    : {n_review}")
+    print(f"         OBSERVER EFFECT : {n_noise}\n")
+
+    # Step 5: Write report
+    print("[5/5] Writing report...")
 
     prior_total   = prior_df["count"].sum() if not prior_df.empty else 0
     current_total = current_df["count"].sum() if not current_df.empty else 0
