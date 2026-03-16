@@ -40,24 +40,40 @@ front-range-wildlife/
 ├── requirements.txt               # Python library dependencies (pip install -r requirements.txt).
 │
 ├── scripts/
-│   └── inat_signal_test.py        # Queries iNaturalist API, analyzes species trends,
-│                                  # and writes the signal test report.
+│   ├── inat_signal_test.py        # Queries iNaturalist API, analyzes species trends,
+│   │                              # and writes the signal test report.
+│   └── declining_species.py       # Identifies species with meaningful observation declines.
+│                                  # Compares prior vs. current 12-month periods across all
+│                                  # species with >= 10 prior observations. Groups results
+│                                  # by taxonomic category. Tunable via DECLINE_THRESHOLD
+│                                  # and MIN_PRIOR_OBS at the top of the file.
 │
 └── reports/
-    └── inat_signal_test.md        # Auto-generated plain-English report. Do not edit by hand
-                                   # — it is overwritten every time the script runs.
+    ├── inat_signal_test.md        # Auto-generated. Do not edit by hand.
+    └── declining_species.md       # Auto-generated. Do not edit by hand.
 ```
 
 ---
 
 ## How to Run the Analysis
 
+**Signal test** (proof of data quality, ~2–4 min):
 ```bash
 cd C:\Users\User\front-range-wildlife
 python scripts/inat_signal_test.py
 ```
+Output saved to `reports/inat_signal_test.md`.
 
-The script will print live progress to the terminal and save output to `reports/inat_signal_test.md`. A full run takes 2–4 minutes due to API pagination.
+**Declining species detector** (~3 min):
+```bash
+cd C:\Users\User\front-range-wildlife
+python scripts/declining_species.py
+```
+Output saved to `reports/declining_species.md`.
+
+To adjust sensitivity, edit these two variables at the top of `declining_species.py`:
+- `DECLINE_THRESHOLD = 0.40` — flag species that dropped by this fraction or more (0.40 = 40%)
+- `MIN_PRIOR_OBS = 10` — ignore species with fewer prior-period observations than this
 
 ---
 
@@ -73,6 +89,17 @@ The script will print live progress to the terminal and save output to `reports/
 - **Pagination limit:** iNaturalist caps unauthenticated queries at 10,000 records (50 pages × 200). This is why the script uses `species_counts` instead of fetching individual observations.
 - **Date filtering:** `d1` and `d2` parameters accept `YYYY-MM-DD` format.
 - **Quality filter:** Script uses `quality_grade=research,needs_id` to exclude casual/placeholder entries.
+
+---
+
+## Declining Species Detector Results (run: 2026-03-15)
+
+- **1,908** species analyzed (those with >= 10 observations in the prior period)
+- **181** species flagged total: **22 disappeared entirely** (zero current observations), **159 declined 40% or more**
+- **Insects dominate the decline list** — 83 of 181 flagged species, including 11 that disappeared entirely
+- Other flagged groups: Plants 42, Birds 25, Arachnids 12, Fungi 11, Mammals 5
+- Notable findings: Grass spiders (175 → 0), Black swallowtail (−76%), Northern leopard frog (−63%), Greater short-horned lizard (−73%), three gentian species all 70%+ down
+- Threshold used: 40% decline, minimum 10 prior observations
 
 ---
 
