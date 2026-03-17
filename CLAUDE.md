@@ -124,6 +124,20 @@ Set it once in PowerShell: `[System.Environment]::SetEnvironmentVariable("EBIRD_
 
 ---
 
+## GBIF Cross-Reference Results (run: 2026-03-16)
+
+Of the 46 HIGH CONFIDENCE insect species from the declining species report, GBIF cross-reference produced:
+
+- **29 CORROBORATED** — GBIF also shows a 40%+ decline
+  - **1 GENUINE MULTI-SOURCE** — Horace's duskywing (*Erynnis horatius*): GBIF has 59% more records than iNaturalist in the prior period (51 vs 32), meaning independent sources confirm the decline
+  - **28 LIMITED INDEPENDENT DATA** — GBIF-confirmed decline, but GBIF's counts are within 20% of iNaturalist's, meaning GBIF is mostly iNaturalist data repackaged
+- **6 CONTRADICTED** — GBIF stable or smaller decline (Four-spurred assassin bug, Larder beetle, Indiscriminate cuckoo bumble bee, Pale green assassin bug, Delaware skipper, Ferruginous tiger crane fly)
+- **11 INSUFFICIENT DATA** — too few GBIF records or no taxon match
+
+**Key finding:** The near-total absence of GENUINE MULTI-SOURCE findings reflects a structural data gap: iNaturalist is the dominant source of insect occurrence records in GBIF for this region. GBIF corroboration for Colorado insects is mostly iNaturalist seen through two windows, not independent validation.
+
+---
+
 ## eBird Cross-Reference Results (run: 2026-03-16)
 
 Of the 25 bird species flagged by iNaturalist, 18 had HIGH CONFIDENCE (10+ independent observers). The eBird cross-reference reduced those 18 to **4 corroborated findings** — species where both datasets independently show a decline:
