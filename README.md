@@ -35,7 +35,7 @@ Within 50 miles of Highlands Ranch, CO:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/front-range-wildlife.git
+git clone https://github.com/kellyandrewb-blip/front-range-wildlife.git
 cd front-range-wildlife
 
 # 2. Install Python dependencies
