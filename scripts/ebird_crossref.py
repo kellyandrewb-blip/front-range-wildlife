@@ -8,16 +8,18 @@ occurrence frequency across the same prior and current 12-month periods to
 classify each species as CORROBORATED, CONTRADICTED, or INSUFFICIENT DATA.
 
 API strategy:
-- GET /v2/data/obs/geo/historic/{y}/{m}/{d}
-  One call per monthly sample date (15th of each month) across both periods.
-  Returns all species observed in a 50 km radius on that date.
-  24 total API calls.
+- GET /v2/data/obs/{regionCode}/historic/{y}/{m}/{d}
+  The eBird API does not support lat/lng radius queries for historical data.
+  Historic queries require a region code (county, state, etc.) in the path.
+  We query 5 core Front Range counties per sample date and union the results.
+  5 counties × 24 sample dates = 120 total API calls.
 
 Geographic note:
-- eBird's dist parameter is capped at 50 km (31 miles).
-- iNaturalist used 80.5 km (50 miles). This is a smaller search area.
-  Species with sparse eBird records may partly reflect the tighter radius,
-  not genuine absence.
+- iNaturalist used an 80.5 km (50 mile) circle around Highlands Ranch.
+- eBird historical queries use county-level regions. We cover the 5 core
+  counties that fall within that circle: Douglas, Arapahoe, Jefferson,
+  Denver, and El Paso. This is comparable coverage for the Front Range
+  corridor, though shaped differently (county boundaries vs. a circle).
 
 Authentication:
 - Requires a free eBird API key stored in the EBIRD_API_KEY environment variable.
@@ -38,9 +40,17 @@ from pathlib import Path
 # CONFIGURATION
 # ---------------------------------------------------------------------------
 
-LAT       = 39.5594
+LAT       = 39.5594   # kept for reference / report header
 LON       = -104.9719
-RADIUS_KM = 50          # eBird caps dist at 50 km (iNaturalist used 80.5 km)
+
+# The 5 core Front Range counties within ~50 miles of Highlands Ranch, CO.
+# eBird historic queries use county-level region codes, not lat/lng radius.
+#   US-CO-035  Douglas County   — Highlands Ranch, Parker, Castle Rock
+#   US-CO-005  Arapahoe County  — Centennial, Cherry Creek, Aurora
+#   US-CO-059  Jefferson County — Lakewood, Arvada, Golden, Evergreen
+#   US-CO-031  Denver County    — Denver
+#   US-CO-041  El Paso County   — Colorado Springs (southern edge)
+REGION_CODES = ["US-CO-035", "US-CO-005", "US-CO-059", "US-CO-031", "US-CO-041"]
 
 # A species needs at least this many total detections across all 24 sample
 # dates (both periods combined) to have enough data for a comparison.
@@ -85,8 +95,8 @@ HEADERS = {"x-ebirdapitoken": API_KEY}
 # ---------------------------------------------------------------------------
 
 SPECIES = {
-    "Yellow-billed Loon":             "yblloon",
-    "Curve-billed Thrasher":          "cubtra",
+    "Yellow-billed Loon":             "yebloo",
+    "Curve-billed Thrasher":          "cubthr",
     "Glossy Ibis":                    "gloibi",
     "White-winged Scoter":            "whwsco",
     "Varied Thrush":                  "varthr",
@@ -101,7 +111,7 @@ SPECIES = {
     "Savannah Sparrow":               "savspa",
     "Barrow's Goldeneye":             "bargol",
     "Brown-capped Rosy-Finch":        "bcrfin",
-    "Northern Rough-winged Swallow":  "norswi1",
+    "Northern Rough-winged Swallow":  "nrwswa",
     "American Barn Owl":              "brnowl",
 }
 
@@ -210,26 +220,30 @@ def validate_species_codes() -> dict:
 
 def fetch_species_on_date(d: date) -> set:
     """
-    Call GET /v2/data/obs/geo/historic/{y}/{m}/{d} for our location.
+    Query all 5 Front Range counties for observations on a specific date.
 
-    Returns a set of eBird species codes for every species observed anywhere
-    in the 50 km radius on that specific date.
+    Calls GET /v2/data/obs/{regionCode}/historic/{y}/{m}/{d} for each county
+    and returns the union of all species codes observed that day.
 
-    maxResults=500 is well above the typical daily observation count for a
-    50 km radius. detail=simple reduces payload — we only need speciesCode.
+    The eBird API does not support lat/lng radius queries for historical dates
+    — historic data requires a region code in the path. Using 5 counties gives
+    us comparable coverage to the iNaturalist 50-mile circle.
+
+    Zero-pads month and day to match eBird's expected URL format.
     """
-    data = ebird_get(
-        f"data/obs/geo/historic/{d.year}/{d.month}/{d.day}",
-        {
-            "lat":        LAT,
-            "lng":        LON,
-            "dist":       RADIUS_KM,
-            "maxResults": 500,
-            "detail":     "simple",
-        }
-    )
-    # data is a list of observation records; extract unique species codes
-    return {obs["speciesCode"] for obs in data if "speciesCode" in obs}
+    observed = set()
+    y  = d.year
+    m  = f"{d.month:02d}"
+    dy = f"{d.day:02d}"
+
+    for region in REGION_CODES:
+        data = ebird_get(f"data/obs/{region}/historic/{y}/{m}/{dy}")
+        for obs in data:
+            if "speciesCode" in obs:
+                observed.add(obs["speciesCode"])
+        time.sleep(REQUEST_PAUSE)
+
+    return observed
 
 
 # ---------------------------------------------------------------------------
@@ -279,10 +293,8 @@ def build_frequency_table(prior_dates: list, current_dates: list) -> pd.DataFram
         for code in target_codes:
             presence[code].append(1 if code in observed else 0)
 
-        print(f"{len(observed):,} total species on eBird | "
+        print(f"{len(observed):,} species across 5 counties | "
               f"{n_targets_found}/18 targets detected")
-
-        time.sleep(REQUEST_PAUSE)
 
     # Aggregate per-species counts and classify
     rows = []
@@ -349,7 +361,7 @@ def write_report(
     lines += [
         "# eBird Cross-Reference Report -- Declining Bird Species",
         "",
-        f"**Area:** 50 km radius around Highlands Ranch, CO  ",
+        f"**Area:** Douglas, Arapahoe, Jefferson, Denver, and El Paso counties, CO  ",
         f"**Prior period:** {prior_start} to {prior_end}  ",
         f"**Current period:** {current_start} to {current_end}  ",
         f"**eBird data source:** Cornell Lab of Ornithology (ebird.org)  ",
@@ -378,18 +390,21 @@ def write_report(
         "",
         "**Sampling approach:** The eBird API does not support continuous 12-month range "
         "queries. Instead, we sampled the 15th of each calendar month across both periods — "
-        f"{n_prior} prior dates and {n_current} current dates ({n_prior + n_current} total "
-        "API calls). For each date, we recorded whether eBird had any observations of each "
-        "target species within 50 km of Highlands Ranch.",
+        f"{n_prior} prior dates and {n_current} current dates ({n_prior + n_current} sample "
+        "dates, 5 county queries each = "
+        f"{(n_prior + n_current) * len(REGION_CODES)} total API calls). For each date, we "
+        "recorded whether eBird had any observations of each target species across the region.",
         "",
         "**The metric — monthly occurrence frequency:** How many of the 12 sampled months "
         "did a species appear on eBird? A drop of 2 or more months between periods is "
         "classified as CORROBORATED.",
         "",
-        "**Geographic difference:** eBird's radius is capped at 50 km (31 miles). "
-        "The iNaturalist analysis used 80.5 km (50 miles). Some species may have "
-        "fewer eBird records simply because of this smaller search area — we note this "
-        "in the INSUFFICIENT DATA section.",
+        "**Geographic approach:** The eBird API's historical endpoint uses county-level "
+        "region codes rather than a lat/lng radius. We queried 5 core Front Range counties "
+        "within the ~50-mile study area: Douglas (Highlands Ranch), Arapahoe (Cherry Creek), "
+        "Jefferson (Foothills), Denver, and El Paso (Colorado Springs corridor). This covers "
+        "comparable territory to the iNaturalist circle, though shaped by county boundaries "
+        "rather than a perfect circle.",
         "",
         "---",
         "",
@@ -596,8 +611,8 @@ def write_report(
         f"*Report generated by the Front Range Wildlife Intelligence System. "
         f"eBird data © Cornell Lab of Ornithology (ebird.org). "
         f"iNaturalist data © iNaturalist community contributors. "
-        f"Analysis covers a 50 km radius around Highlands Ranch, CO "
-        f"(lat {LAT}, lon {LON}).*",
+        f"Analysis covers Douglas, Arapahoe, Jefferson, Denver, and El Paso counties, CO "
+        f"(centered on Highlands Ranch, lat {LAT}, lon {LON}).*",
     ]
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -616,7 +631,7 @@ def main():
     print("=" * 60)
     print(f"Prior period  : {prior_start} -> {prior_end}")
     print(f"Current period: {current_start} -> {current_end}")
-    print(f"Search radius : {RADIUS_KM} km  (eBird max; iNat used 80.5 km)")
+    print(f"Region        : {len(REGION_CODES)} counties (Douglas, Arapahoe, Jefferson, Denver, El Paso)")
     print(f"Target species: {len(SPECIES)}")
     print()
 
@@ -629,8 +644,9 @@ def main():
     prior_dates   = sample_dates_for_period(prior_start, prior_end)
     current_dates = sample_dates_for_period(current_start, current_end)
 
+    n_calls = (len(prior_dates) + len(current_dates)) * len(REGION_CODES)
     print(f"[2/3] Fetching eBird historic observations "
-          f"({len(prior_dates) + len(current_dates)} API calls)...")
+          f"({n_calls} API calls across 5 counties × 24 dates)...")
     print(f"      Prior samples  : {prior_dates[0]} to {prior_dates[-1]}")
     print(f"      Current samples: {current_dates[0]} to {current_dates[-1]}")
 
