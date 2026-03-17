@@ -42,15 +42,22 @@ front-range-wildlife/
 ├── scripts/
 │   ├── inat_signal_test.py        # Queries iNaturalist API, analyzes species trends,
 │   │                              # and writes the signal test report.
-│   └── declining_species.py       # Identifies species with meaningful observation declines.
-│                                  # Compares prior vs. current 12-month periods across all
-│                                  # species with >= 10 prior observations. Groups results
-│                                  # by taxonomic category. Tunable via DECLINE_THRESHOLD
-│                                  # and MIN_PRIOR_OBS at the top of the file.
+│   ├── declining_species.py       # Identifies species with meaningful observation declines.
+│   │                              # Compares prior vs. current 12-month periods across all
+│   │                              # species with >= 10 prior observations. Groups results
+│   │                              # by taxonomic category. Tunable via DECLINE_THRESHOLD
+│   │                              # and MIN_PRIOR_OBS at the top of the file.
+│   └── ebird_crossref.py          # Cross-references the 18 HIGH CONFIDENCE bird species
+│                                  # from the declining species report against eBird data.
+│                                  # Samples 15th of each month across both periods (24 API
+│                                  # calls). Classifies each species as CORROBORATED,
+│                                  # CONTRADICTED, or INSUFFICIENT DATA.
+│                                  # Requires EBIRD_API_KEY environment variable.
 │
 └── reports/
     ├── inat_signal_test.md        # Auto-generated. Do not edit by hand.
-    └── declining_species.md       # Auto-generated. Do not edit by hand.
+    ├── declining_species.md       # Auto-generated. Do not edit by hand.
+    └── ebird_crossref.md          # Auto-generated. Do not edit by hand.
 ```
 
 ---
@@ -74,6 +81,31 @@ Output saved to `reports/declining_species.md`.
 To adjust sensitivity, edit these two variables at the top of `declining_species.py`:
 - `DECLINE_THRESHOLD = 0.40` — flag species that dropped by this fraction or more (0.40 = 40%)
 - `MIN_PRIOR_OBS = 10` — ignore species with fewer prior-period observations than this
+
+**eBird cross-reference** (~3 min, requires API key):
+```bash
+cd C:\Users\User\front-range-wildlife
+python scripts/ebird_crossref.py
+```
+Output saved to `reports/ebird_crossref.md`.
+
+Requires `EBIRD_API_KEY` set as a Windows environment variable (free key from https://ebird.org/api/keygen).
+Set it once in PowerShell: `[System.Environment]::SetEnvironmentVariable("EBIRD_API_KEY", "your_key", "User")`
+
+---
+
+## eBird API — Key Facts
+
+- **Free, but requires an API key.** Register at https://ebird.org/api/keygen — instant, no payment.
+- **Base URL:** `https://api.ebird.org/v2/`
+- **Authentication:** HTTP header `x-ebirdapitoken: YOUR_KEY` on every request.
+- **Rate limit:** 10,000 requests per day. Our script uses ~25.
+- **Radius search:** Supported via `lat`, `lng`, `dist` (km). The `dist` parameter is **capped at 50 km** (31 miles). iNaturalist uses 80.5 km — this is a known difference documented in the report.
+- **Historical data limitation:** Standard endpoints only look back 30 days. For 12-month comparisons we use `GET /v2/data/obs/geo/historic/{y}/{m}/{d}`, which returns all observations submitted on a specific calendar date.
+- **Key endpoints used:**
+  - `GET /v2/ref/taxonomy/ebird?fmt=json&species=code1,code2,...` — validates species codes and returns common names. Used at startup to confirm our 18-species lookup table.
+  - `GET /v2/data/obs/geo/historic/{y}/{m}/{d}` — all observations within a radius on a specific date. Used for monthly sampling.
+- **Species codes:** 6-character lowercase codes (e.g., `norshr` = Northern Shrike). The 18-species lookup table is hardcoded in `ebird_crossref.py` and validated at runtime.
 
 ---
 
