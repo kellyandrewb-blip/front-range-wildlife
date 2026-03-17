@@ -1,6 +1,5 @@
-# Generated reports — tracked via git history in scripts, not as output files
+# PDFs are binary and large — not tracked
 reports/*.pdf
-reports/*.md
 
 # Python
 __pycache__/
