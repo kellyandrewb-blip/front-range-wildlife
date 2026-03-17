@@ -1,0 +1,10 @@
+# Generated reports — tracked via git history in scripts, not as output files
+reports/*.pdf
+reports/*.md
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
