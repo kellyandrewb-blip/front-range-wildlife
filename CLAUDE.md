@@ -47,17 +47,26 @@ front-range-wildlife/
 │   │                              # species with >= 10 prior observations. Groups results
 │   │                              # by taxonomic category. Tunable via DECLINE_THRESHOLD
 │   │                              # and MIN_PRIOR_OBS at the top of the file.
-│   └── ebird_crossref.py          # Cross-references the 18 HIGH CONFIDENCE bird species
-│                                  # from the declining species report against eBird data.
-│                                  # Samples 15th of each month across both periods (24 API
-│                                  # calls). Classifies each species as CORROBORATED,
-│                                  # CONTRADICTED, or INSUFFICIENT DATA.
-│                                  # Requires EBIRD_API_KEY environment variable.
+│   ├── ebird_crossref.py          # Cross-references the 18 HIGH CONFIDENCE bird species
+│   │                              # from the declining species report against eBird data.
+│   │                              # Samples 15th of each month across both periods (24 API
+│   │                              # calls). Classifies each species as CORROBORATED,
+│   │                              # CONTRADICTED, or INSUFFICIENT DATA.
+│   │                              # Requires EBIRD_API_KEY environment variable.
+│   ├── gbif_crossref.py           # Cross-references HIGH CONFIDENCE insect species from
+│   │                              # the declining species report against GBIF occurrence
+│   │                              # data. Classifies each as CORROBORATED, CONTRADICTED,
+│   │                              # or INSUFFICIENT DATA. No API key required.
+│   └── generate_pdf.py            # Renders declining_species.md to a styled PDF using
+│                                  # the markdown + playwright (headless Chromium) stack.
+│                                  # Output: reports/declining_species.pdf.
 │
 └── reports/
     ├── inat_signal_test.md        # Auto-generated. Do not edit by hand.
     ├── declining_species.md       # Auto-generated. Do not edit by hand.
-    └── ebird_crossref.md          # Auto-generated. Do not edit by hand.
+    ├── ebird_crossref.md          # Auto-generated. Do not edit by hand.
+    ├── gbif_crossref.md           # Auto-generated. Do not edit by hand.
+    └── declining_species.pdf      # Auto-generated. Do not edit by hand.
 ```
 
 ---
