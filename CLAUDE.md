@@ -99,13 +99,13 @@ Set it once in PowerShell: `[System.Environment]::SetEnvironmentVariable("EBIRD_
 - **Free, but requires an API key.** Register at https://ebird.org/api/keygen — instant, no payment.
 - **Base URL:** `https://api.ebird.org/v2/`
 - **Authentication:** HTTP header `x-ebirdapitoken: YOUR_KEY` on every request.
-- **Rate limit:** 10,000 requests per day. Our script uses ~25.
-- **Radius search:** Supported via `lat`, `lng`, `dist` (km). The `dist` parameter is **capped at 50 km** (31 miles). iNaturalist uses 80.5 km — this is a known difference documented in the report.
-- **Historical data limitation:** Standard endpoints only look back 30 days. For 12-month comparisons we use `GET /v2/data/obs/geo/historic/{y}/{m}/{d}`, which returns all observations submitted on a specific calendar date.
+- **Rate limit:** 10,000 requests per day. Our script uses ~120.
+- **Historical data limitation:** Standard "recent" endpoints only look back 30 days. For 12-month comparisons, use `GET /v2/data/obs/{regionCode}/historic/{y}/{m}/{d}`. **Important:** a `geo/historic` lat/lng radius variant does not exist — historic queries require a region code (county or state) in the path, not coordinates.
+- **Geographic approach for historic queries:** We query 5 counties (Douglas, Arapahoe, Jefferson, Denver, El Paso) and union the results per sample date. This approximates the 50-mile iNaturalist circle using county boundaries.
 - **Key endpoints used:**
-  - `GET /v2/ref/taxonomy/ebird?fmt=json&species=code1,code2,...` — validates species codes and returns common names. Used at startup to confirm our 18-species lookup table.
-  - `GET /v2/data/obs/geo/historic/{y}/{m}/{d}` — all observations within a radius on a specific date. Used for monthly sampling.
-- **Species codes:** 6-character lowercase codes (e.g., `norshr` = Northern Shrike). The 18-species lookup table is hardcoded in `ebird_crossref.py` and validated at runtime.
+  - `GET /v2/ref/taxonomy/ebird?fmt=json&species=code1,code2,...` — validates species codes. One call with all codes comma-joined.
+  - `GET /v2/data/obs/{regionCode}/historic/{y}/{m}/{d}` — all species observed in a county on a specific date. Used for monthly sampling.
+- **Species codes:** Typically 6 lowercase characters (e.g., `norshr` = Northern Shrike). Validated at script startup. Three codes required correction during development: `yblloon`→`yebloo`, `cubtra`→`cubthr`, `norswi1`→`nrwswa`.
 
 ---
 
@@ -121,6 +121,21 @@ Set it once in PowerShell: `[System.Environment]::SetEnvironmentVariable("EBIRD_
 - **Pagination limit:** iNaturalist caps unauthenticated queries at 10,000 records (50 pages × 200). This is why the script uses `species_counts` instead of fetching individual observations.
 - **Date filtering:** `d1` and `d2` parameters accept `YYYY-MM-DD` format.
 - **Quality filter:** Script uses `quality_grade=research,needs_id` to exclude casual/placeholder entries.
+
+---
+
+## eBird Cross-Reference Results (run: 2026-03-16)
+
+Of the 25 bird species flagged by iNaturalist, 18 had HIGH CONFIDENCE (10+ independent observers). The eBird cross-reference reduced those 18 to **4 corroborated findings** — species where both datasets independently show a decline:
+
+- **Yellow-billed Loon** — 5/12 prior months → 0/12 current on eBird; disappeared from both datasets
+- **Curve-billed Thrasher** — 6/12 → 2/12 months on eBird; significant drop in a year-round resident
+- **Brown-capped Rosy-Finch** — 4/12 → 0/12 months on eBird; disappeared from both datasets
+- **Cassin's Finch** — 11/12 → 9/12 months on eBird; consistent decline across both sources
+
+The remaining 14 species split as: **9 CONTRADICTED** (eBird stable or growing — iNaturalist declines likely observer-driven) and **5 INSUFFICIENT DATA** (Glossy Ibis, White-winged Scoter, Varied Thrush, Northern Shrike, Yellow-bellied Sapsucker — too sparse on eBird to judge).
+
+**Interpretation:** Most iNaturalist bird declines were not confirmed by dedicated birding data. The 4 corroborated species are the priority for conservation follow-up.
 
 ---
 
