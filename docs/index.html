@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Front Range Wildlife Intelligence System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #f7f8f4; font-family: system-ui, -apple-system, sans-serif; }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #1a3a2a 0%, #2d6a4f 60%, #40916c 100%); }
+
+    /* Stat cards */
+    .stat-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(4px); }
+
+    /* Finding cards */
+    .card-insect  { background: #fffbeb; border-left: 4px solid #d97706; }
+    .card-birds   { background: #eff8ff; border-left: 4px solid #2563eb; }
+    .card-method  { background: #f0fdf4; border-left: 4px solid #16a34a; }
+
+    /* Badges */
+    .badge-corroborated { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .badge-inat         { background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+
+    /* Table */
+    .table-wrap { border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    thead th { background: #1a3a2a; color: #d1fae5; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 14px; }
+    tbody tr { border-bottom: 1px solid #e8ede8; transition: background 0.1s; }
+    tbody tr:hover { background: #f0fdf4; }
+    tbody td { padding: 9px 14px; font-size: 0.875rem; color: #1f2937; }
+    tbody tr:last-child { border-bottom: none; }
+
+    /* Change color coding */
+    .gone    { color: #dc2626; font-weight: 700; }
+    .severe  { color: #b45309; font-weight: 600; }
+    .moderate{ color: #92400e; }
+
+    /* Group filter buttons */
+    .filter-btn { transition: all 0.15s; border: 1px solid #d1d5db; cursor: pointer; }
+    .filter-btn:hover  { border-color: #2d6a4f; color: #2d6a4f; }
+    .filter-btn.active { background: #2d6a4f; color: white; border-color: #2d6a4f; }
+
+    /* Search */
+    .search-input:focus { outline: none; border-color: #2d6a4f; box-shadow: 0 0 0 3px rgba(45,106,79,0.15); }
+
+    /* Corroboration tooltip */
+    .corr-tip { position: relative; }
+    .corr-tip:hover::after { content: attr(data-tip); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background: #1a3a2a; color: white; font-size: 0.72rem; padding: 4px 8px; border-radius: 4px; white-space: nowrap; z-index: 10; }
+
+    @media (max-width: 640px) {
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .sci-name { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero text-white py-16 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-block bg-white/10 text-green-200 text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-5">Colorado · Front Range · March 2026</div>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Front Range Wildlife<br>Intelligence System</h1>
+    <p class="text-green-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+      Tracking wildlife health across 50 miles of Colorado's Front Range — using free public observation data to find which species are declining, and whether the cause is local or regional.
+    </p>
+
+    <!-- Stats -->
+    <div class="hero-stats grid grid-cols-4 gap-3 max-w-3xl mx-auto">
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">1,908</div>
+        <div class="text-green-200 text-xs mt-1">species analyzed</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">181</div>
+        <div class="text-green-200 text-xs mt-1">flagged declining</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">111</div>
+        <div class="text-green-200 text-xs mt-1">high confidence</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">5</div>
+        <div class="text-green-200 text-xs mt-1">independently confirmed</div>
+      </div>
+    </div>
+
+    <p class="text-green-300 text-xs mt-6">
+      Data: March 2024 – March 2026 &nbsp;·&nbsp; 50-mile radius around Highlands Ranch, CO &nbsp;·&nbsp; 268,000+ research-grade observations
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ KEY FINDINGS ═══════════════════════ -->
+<section class="max-w-5xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-gray-800 mb-2">Key Findings</h2>
+  <p class="text-gray-500 text-sm mb-8">What the data shows — and what we can act on.</p>
+
+  <div class="cards-grid grid grid-cols-3 gap-5">
+
+    <!-- Card 1: Insect Decline -->
+    <div class="card-insect rounded-xl p-6 shadow-sm">
+      <div class="text-amber-700 text-xs font-bold tracking-widest uppercase mb-3">Insects</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">The Insect Decline</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        <strong>46 high-confidence insect species</strong> are declining on the Front Range — more than any other group. Butterflies, moths, beetles, grasshoppers, and native bees all appear on the list.
+      </p>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        Only one — <strong>Horace's Duskywing</strong> — has genuine independent corroboration: GBIF holds more records than iNaturalist for this species, confirming the decline through a truly separate data source.
+      </p>
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800">
+        <strong>Why so few confirmed?</strong> Colorado insect monitoring is almost entirely iNaturalist. GBIF aggregates iNaturalist data, so "corroboration" from GBIF often means seeing the same observations twice.
+      </div>
+    </div>
+
+    <!-- Card 2: Two Birds -->
+    <div class="card-birds rounded-xl p-6 shadow-sm">
+      <div class="text-blue-700 text-xs font-bold tracking-widest uppercase mb-3">Birds · RMNP Comparison</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">Two Birds, Two Stories</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        We compared declining birds against Rocky Mountain National Park data to separate <em>local</em> from <em>regional</em> causes.
+      </p>
+      <div class="space-y-3">
+        <div class="bg-white rounded-lg p-3 border border-blue-100">
+          <div class="font-semibold text-gray-800 text-sm">Cassin's Finch</div>
+          <div class="text-xs text-gray-600 mt-1">Front Range: <span class="text-red-600 font-semibold">−70.6%</span> &nbsp;·&nbsp; RMNP: <span class="text-green-600 font-semibold">−6.2% (stable)</span></div>
+          <div class="text-xs text-blue-700 mt-1 font-medium">→ Local habitat pressure. RMNP population is fine.</div>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-blue-100">
+          <div class="font-semibold text-gray-800 text-sm">Brown-capped Rosy-Finch</div>
+          <div class="text-xs text-gray-600 mt-1">Front Range: <span class="text-red-600 font-semibold">−42.9%</span> &nbsp;·&nbsp; RMNP: <span class="text-red-600 font-semibold">−64.4%</span></div>
+          <div class="text-xs text-blue-700 mt-1 font-medium">→ Regional signal. Both sites declining — likely climate.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Methodology -->
+    <div class="card-method rounded-xl p-6 shadow-sm">
+      <div class="text-green-700 text-xs font-bold tracking-widest uppercase mb-3">Methodology</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">How We Know This</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        Three layers of analysis, each filtering out noise from the one before.
+      </p>
+      <ol class="space-y-2 text-sm text-gray-700">
+        <li class="flex gap-2"><span class="text-green-700 font-bold shrink-0">1.</span><span><strong>iNaturalist baseline</strong> — 268,000+ research-grade observations. Observer participation up 5.2%, so species declines aren't explained by fewer people submitting data.</span></li>
+        <li class="flex gap-2"><span class="text-green-700 font-bold shrink-0">2.</span><span><strong>eBird cross-check</strong> — bird declines validated against Cornell Lab's dedicated birding database. 4 of 18 high-confidence bird declines confirmed.</span></li>
+        <li class="flex gap-2"><span class="text-green-700 font-bold shrink-0">3.</span><span><strong>RMNP comparison</strong> — declining species checked against Rocky Mountain National Park to separate urban habitat loss from regional climate signals.</span></li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════ SPECIES TABLE ═══════════════════════ -->
+<section class="max-w-6xl mx-auto px-4 pb-16">
+  <h2 class="text-2xl font-bold text-gray-800 mb-1">All High-Confidence Declining Species</h2>
+  <p class="text-gray-500 text-sm mb-6">111 species flagged by 10 or more independent observers. Their declines are unlikely to be explained by one person stopping their nature walks.</p>
+
+  <!-- Search + Filter controls -->
+  <div class="flex flex-col sm:flex-row gap-3 mb-4">
+    <div class="relative flex-1 max-w-sm">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+      <input id="search" type="text" placeholder="Search species…" class="search-input w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-white" oninput="filterTable()">
+    </div>
+    <div id="group-count" class="text-sm text-gray-400 self-center"></div>
+  </div>
+
+  <!-- Group filter buttons -->
+  <div class="flex flex-wrap gap-2 mb-5" id="filter-buttons">
+    <button class="filter-btn active text-sm px-3 py-1.5 rounded-full bg-white font-medium" data-group="All" onclick="setGroup(this)">All</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Birds" onclick="setGroup(this)">Birds</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Insects" onclick="setGroup(this)">Insects</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Plants" onclick="setGroup(this)">Plants</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Mammals" onclick="setGroup(this)">Mammals</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Arachnids" onclick="setGroup(this)">Arachnids</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Fungi" onclick="setGroup(this)">Fungi</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Reptiles" onclick="setGroup(this)">Reptiles</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Amphibians" onclick="setGroup(this)">Amphibians</button>
+    <button class="filter-btn text-sm px-3 py-1.5 rounded-full bg-white text-gray-600 font-medium" data-group="Other" onclick="setGroup(this)">Other</button>
+  </div>
+
+  <!-- Corroboration key -->
+  <div class="flex flex-wrap gap-3 mb-4 text-xs text-gray-500">
+    <span class="font-semibold text-gray-600">Corroboration key:</span>
+    <span class="badge-corroborated rounded-full px-2 py-0.5 font-medium">✓ Corroborated</span>
+    <span>— decline confirmed by an independent dataset (eBird or GBIF)</span>
+    <span class="badge-inat rounded-full px-2 py-0.5 font-medium ml-2">iNaturalist only</span>
+    <span>— checked against another dataset; not independently confirmed</span>
+    <span class="text-gray-400 ml-2 italic">no badge — not yet cross-referenced</span>
+  </div>
+
+  <div class="table-wrap bg-white">
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="text-left">Common Name</th>
+          <th class="text-left sci-name">Scientific Name</th>
+          <th class="text-left">Group</th>
+          <th class="text-right">Decline</th>
+          <th class="text-right">Prior Observers</th>
+          <th class="text-center">Corroboration</th>
+        </tr>
+      </thead>
+      <tbody id="species-tbody"></tbody>
+    </table>
+    <div id="no-results" class="hidden text-center py-12 text-gray-400 text-sm">No species match your search.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="border-t border-gray-200 bg-white mt-4">
+  <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between gap-4 text-sm text-gray-500">
+    <div>
+      <div class="font-semibold text-gray-700 mb-1">Front Range Wildlife Intelligence System</div>
+      <div>Open source · Built for under-resourced conservation organizations</div>
+      <div class="mt-1">Designed for the <a href="https://butterflies.org" class="text-green-700 hover:underline">Butterfly Pavilion</a>, Westminster, CO</div>
+    </div>
+    <div class="text-right">
+      <div><a href="https://github.com/kellyandrewb-blip/front-range-wildlife" class="text-green-700 hover:underline font-medium">View on GitHub →</a></div>
+      <div class="mt-1">Observation data: <a href="https://www.inaturalist.org" class="text-green-700 hover:underline">iNaturalist</a> · <a href="https://ebird.org" class="text-green-700 hover:underline">eBird</a> · <a href="https://www.gbif.org" class="text-green-700 hover:underline">GBIF</a></div>
+      <div class="mt-1 text-xs text-gray-400">Analysis: March 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── SPECIES DATA ─────────────────────────────────────────────────────────────
+// 111 HIGH CONFIDENCE species (10+ independent prior-period observers).
+// chg: percentage change (−100 = disappeared entirely).
+// corr: "corroborated" | "inat_only" | "" (not cross-referenced / insufficient data)
+// Source: reports/declining_species.md (run 2026-03-15),
+//         reports/ebird_crossref.md (run 2026-03-16),
+//         reports/gbif_crossref.md  (run 2026-03-16)
+
+const SPECIES = [
+  // ── BIRDS ──────────────────────────────────────────────────────────────────
+  // 4 corroborated by eBird; 5 insufficient eBird data (no badge); 9 contradicted by eBird (inat_only)
+  {c:"Yellow-billed loon",             s:"Gavia adamsii",                  g:"Birds",    prior:15,  curr:0,   chg:-100,  obs:14,  corr:"corroborated"},
+  {c:"Curve-billed thrasher",          s:"Toxostoma curvirostre",          g:"Birds",    prior:12,  curr:0,   chg:-100,  obs:11,  corr:"corroborated"},
+  {c:"Brown-capped rosy-finch",        s:"Leucosticte australis",          g:"Birds",    prior:28,  curr:16,  chg:-42.9, obs:13,  corr:"corroborated"},
+  {c:"Cassin's finch",                 s:"Haemorhous cassinii",            g:"Birds",    prior:17,  curr:5,   chg:-70.6, obs:11,  corr:"corroborated"},
+  {c:"Swainson's thrush",              s:"Catharus ustulatus",             g:"Birds",    prior:13,  curr:2,   chg:-84.6, obs:11,  corr:"inat_only"},
+  {c:"Eastern screech-owl",            s:"Megascops asio",                 g:"Birds",    prior:29,  curr:9,   chg:-69.0, obs:25,  corr:"inat_only"},
+  {c:"Virginia's warbler",             s:"Leiothlypis virginiae",          g:"Birds",    prior:12,  curr:4,   chg:-66.7, obs:11,  corr:"inat_only"},
+  {c:"Eared grebe",                    s:"Podiceps nigricollis",           g:"Birds",    prior:34,  curr:12,  chg:-64.7, obs:18,  corr:"inat_only"},
+  {c:"Canyon wren",                    s:"Catherpes mexicanus",            g:"Birds",    prior:14,  curr:6,   chg:-57.1, obs:12,  corr:"inat_only"},
+  {c:"Savannah sparrow",               s:"Passerculus sandwichensis",      g:"Birds",    prior:23,  curr:11,  chg:-52.2, obs:14,  corr:"inat_only"},
+  {c:"Barrow's goldeneye",             s:"Bucephala islandica",            g:"Birds",    prior:16,  curr:9,   chg:-43.8, obs:11,  corr:"inat_only"},
+  {c:"Northern rough-winged swallow",  s:"Stelgidopteryx serripennis",     g:"Birds",    prior:34,  curr:20,  chg:-41.2, obs:21,  corr:"inat_only"},
+  {c:"American barn owl",              s:"Tyto furcata",                   g:"Birds",    prior:15,  curr:9,   chg:-40.0, obs:13,  corr:"inat_only"},
+  {c:"Glossy ibis",                    s:"Plegadis falcinellus",           g:"Birds",    prior:11,  curr:0,   chg:-100,  obs:10,  corr:""},
+  {c:"White-winged scoter",            s:"Melanitta deglandi",             g:"Birds",    prior:14,  curr:1,   chg:-92.9, obs:13,  corr:""},
+  {c:"Varied thrush",                  s:"Ixoreus naevius",                g:"Birds",    prior:12,  curr:1,   chg:-91.7, obs:12,  corr:""},
+  {c:"Northern shrike",                s:"Lanius borealis",                g:"Birds",    prior:37,  curr:9,   chg:-75.7, obs:25,  corr:""},
+  {c:"Yellow-bellied sapsucker",       s:"Sphyrapicus varius",             g:"Birds",    prior:20,  curr:6,   chg:-70.0, obs:15,  corr:""},
+
+  // ── INSECTS ────────────────────────────────────────────────────────────────
+  // 1 genuine GBIF corroboration; 28 GBIF limited (inat_only); 6 GBIF contradicted (inat_only); 11 GBIF insufficient ("")
+  {c:"Horace's duskywing",             s:"Erynnis horatius",               g:"Insects",  prior:32,  curr:18,  chg:-43.8, obs:13,  corr:"corroborated"},
+  // GBIF limited independent data (28) — corroborated in GBIF but most records trace back to iNat
+  {c:"Chryxus arctic",                 s:"Oeneis chryxus",                 g:"Insects",  prior:46,  curr:1,   chg:-97.8, obs:22,  corr:"inat_only"},
+  {c:"Sphragisticus nebulosus",        s:"Sphragisticus nebulosus",        g:"Insects",  prior:52,  curr:5,   chg:-90.4, obs:30,  corr:"inat_only"},
+  {c:"Colorado hairstreak",            s:"Hypaurotis crysalus",            g:"Insects",  prior:25,  curr:3,   chg:-88.0, obs:16,  corr:"inat_only"},
+  {c:"Strawberry crown moth",          s:"Synanthedon bibionipennis",      g:"Insects",  prior:14,  curr:2,   chg:-85.7, obs:12,  corr:"inat_only"},
+  {c:"White slant-line",               s:"Tetracis cachexiata",            g:"Insects",  prior:12,  curr:2,   chg:-83.3, obs:10,  corr:"inat_only"},
+  {c:"Charcoal seed bug",              s:"Melacoryphus lateralis",         g:"Insects",  prior:31,  curr:6,   chg:-80.6, obs:22,  corr:"inat_only"},
+  {c:"Arctic fritillary",              s:"Boloria chariclea",              g:"Insects",  prior:38,  curr:8,   chg:-78.9, obs:15,  corr:"inat_only"},
+  {c:"Nessus sphinx",                  s:"Amphion floridensis",            g:"Insects",  prior:32,  curr:7,   chg:-78.1, obs:31,  corr:"inat_only"},
+  {c:"Black swallowtail",              s:"Papilio polyxenes",              g:"Insects",  prior:102, curr:24,  chg:-76.5, obs:80,  corr:"inat_only"},
+  {c:"St. Lawrence tiger moth",        s:"Arctia parthenos",               g:"Insects",  prior:11,  curr:3,   chg:-72.7, obs:10,  corr:"inat_only"},
+  {c:"Coral hairstreak",               s:"Satyrium titus",                 g:"Insects",  prior:18,  curr:5,   chg:-72.2, obs:10,  corr:"inat_only"},
+  {c:"Hedgerow hairstreak",            s:"Satyrium saepium",               g:"Insects",  prior:16,  curr:5,   chg:-68.8, obs:10,  corr:"inat_only"},
+  {c:"Three-spotted flea beetle",      s:"Disonycha triangularis",         g:"Insects",  prior:32,  curr:10,  chg:-68.8, obs:24,  corr:"inat_only"},
+  {c:"Crocus geometer moths",          s:"Xanthotype",                     g:"Insects",  prior:13,  curr:4,   chg:-69.2, obs:11,  corr:"inat_only"},
+  {c:"Shortwing stonefly",             s:"Claassenia sabulosa",            g:"Insects",  prior:13,  curr:5,   chg:-61.5, obs:10,  corr:"inat_only"},
+  {c:"Fall webworm moth",              s:"Hyphantria cunea",               g:"Insects",  prior:20,  curr:8,   chg:-60.0, obs:18,  corr:"inat_only"},
+  {c:"Argus tortoise beetle",          s:"Chelymorpha cassidea",           g:"Insects",  prior:10,  curr:4,   chg:-60.0, obs:10,  corr:"inat_only"},
+  {c:"Painted schinia moth",           s:"Schinia volupia",                g:"Insects",  prior:41,  curr:17,  chg:-58.5, obs:23,  corr:"inat_only"},
+  {c:"Douglas-fir tussock moth",       s:"Orgyia pseudotsugata",           g:"Insects",  prior:195, curr:87,  chg:-55.4, obs:156, corr:"inat_only"},
+  {c:"Snowberry clearwing",            s:"Hemaris diffinis",               g:"Insects",  prior:20,  curr:9,   chg:-55.0, obs:15,  corr:"inat_only"},
+  {c:"Pallid-winged grasshopper",      s:"Trimerotropis pallidipennis",    g:"Insects",  prior:24,  curr:11,  chg:-54.2, obs:21,  corr:"inat_only"},
+  {c:"Estigmene albida",               s:"Estigmene albida",               g:"Insects",  prior:12,  curr:6,   chg:-50.0, obs:11,  corr:"inat_only"},
+  {c:"Arctic blue",                    s:"Agriades glandon",               g:"Insects",  prior:60,  curr:32,  chg:-46.7, obs:31,  corr:"inat_only"},
+  {c:"Thinker moth",                   s:"Lacinipolia meditata",           g:"Insects",  prior:23,  curr:13,  chg:-43.5, obs:10,  corr:"inat_only"},
+  {c:"Draco skipper",                  s:"Polites draco",                  g:"Insects",  prior:23,  curr:13,  chg:-43.5, obs:13,  corr:"inat_only"},
+  {c:"Three-banded grasshopper",       s:"Hadrotettix trifasciatus",       g:"Insects",  prior:16,  curr:9,   chg:-43.8, obs:12,  corr:"inat_only"},
+  {c:"Eastern black carpenter ant",    s:"Camponotus pennsylvanicus",      g:"Insects",  prior:26,  curr:15,  chg:-42.3, obs:20,  corr:"inat_only"},
+  {c:"Isabella tiger moth",            s:"Pyrrharctia isabella",           g:"Insects",  prior:62,  curr:36,  chg:-41.9, obs:57,  corr:"inat_only"},
+  {c:"Club-horned grasshopper",        s:"Aeropedellus clavatus",          g:"Insects",  prior:12,  curr:7,   chg:-41.7, obs:10,  corr:"inat_only"},
+  // GBIF contradicted — GBIF shows stable or smaller decline
+  {c:"Pale green assassin bug",        s:"Zelus luridus",                  g:"Insects",  prior:163, curr:97,  chg:-40.5, obs:125, corr:"inat_only"},
+  {c:"Delaware skipper",               s:"Anatrytone logan",               g:"Insects",  prior:30,  curr:18,  chg:-40.0, obs:15,  corr:"inat_only"},
+  {c:"Ferruginous tiger crane fly",    s:"Nephrotoma ferruginea",          g:"Insects",  prior:15,  curr:9,   chg:-40.0, obs:14,  corr:"inat_only"},
+  {c:"Larder beetle",                  s:"Dermestes lardarius",            g:"Insects",  prior:11,  curr:6,   chg:-45.5, obs:11,  corr:"inat_only"},
+  {c:"Indiscriminate cuckoo bumble bee",s:"Bombus insularis",              g:"Insects",  prior:18,  curr:10,  chg:-44.4, obs:14,  corr:"inat_only"},
+  {c:"Four-spurred assassin bug",      s:"Zelus tetracanthus",             g:"Insects",  prior:13,  curr:7,   chg:-46.2, obs:12,  corr:"inat_only"},
+  // GBIF insufficient data (11)
+  {c:"Condylostylus caudatus",         s:"Condylostylus caudatus",         g:"Insects",  prior:51,  curr:0,   chg:-100,  obs:21,  corr:""},
+  {c:"Diplotaxis",                     s:"Diplotaxis",                     g:"Insects",  prior:35,  curr:0,   chg:-100,  obs:19,  corr:""},
+  {c:"Lycus sanguinipennis",           s:"Lycus sanguinipennis",           g:"Insects",  prior:31,  curr:8,   chg:-74.2, obs:26,  corr:""},
+  {c:"Alfalfa looper moth",            s:"Tathorhynchus exsiccata",        g:"Insects",  prior:17,  curr:5,   chg:-70.6, obs:13,  corr:""},
+  {c:"Lesser house fly",               s:"Fannia canicularis",             g:"Insects",  prior:17,  curr:6,   chg:-64.7, obs:11,  corr:""},
+  {c:"North American tarnished plant bug",s:"Lygus lineolaris",            g:"Insects",  prior:17,  curr:6,   chg:-64.7, obs:14,  corr:""},
+  {c:"Shiny blue bottle fly",          s:"Cynomya cadaverina",             g:"Insects",  prior:21,  curr:8,   chg:-61.9, obs:16,  corr:""},
+  {c:"Poplar twiggall fly",            s:"Euhexomyza schineri",            g:"Insects",  prior:26,  curr:14,  chg:-46.2, obs:10,  corr:""},
+  {c:"Common house fly",               s:"Musca domestica",                g:"Insects",  prior:25,  curr:11,  chg:-56.0, obs:21,  corr:""},
+  {c:"Parallel leafcutter bee",        s:"Megachile parallela",            g:"Insects",  prior:25,  curr:12,  chg:-52.0, obs:20,  corr:""},
+
+  // ── PLANTS ─────────────────────────────────────────────────────────────────
+  {c:"Silvery bryum",                  s:"Bryum argenteum",                g:"Plants",   prior:348, curr:42,  chg:-87.9, obs:13,  corr:""},
+  {c:"Interior sandbar willow",        s:"Salix interior",                 g:"Plants",   prior:32,  curr:6,   chg:-81.2, obs:28,  corr:""},
+  {c:"Common comfrey",                 s:"Symphytum officinale",           g:"Plants",   prior:17,  curr:4,   chg:-76.5, obs:12,  corr:""},
+  {c:"Pygmy gentian",                  s:"Gentiana prostrata",             g:"Plants",   prior:15,  curr:4,   chg:-73.3, obs:10,  corr:""},
+  {c:"Perennial fringed gentian",      s:"Gentianopsis barbellata",        g:"Plants",   prior:22,  curr:6,   chg:-72.7, obs:14,  corr:""},
+  {c:"Pipsissewa",                     s:"Chimaphila umbellata",           g:"Plants",   prior:54,  curr:17,  chg:-68.5, obs:20,  corr:""},
+  {c:"Japanese pagoda tree",           s:"Styphnolobium japonicum",        g:"Plants",   prior:10,  curr:4,   chg:-60.0, obs:10,  corr:""},
+  {c:"Twoflower violet",               s:"Viola biflora",                  g:"Plants",   prior:12,  curr:5,   chg:-58.3, obs:10,  corr:""},
+  {c:"Nodding beggarticks",            s:"Bidens cernua",                  g:"Plants",   prior:21,  curr:9,   chg:-57.1, obs:14,  corr:""},
+  {c:"Sticky geranium",                s:"Geranium viscosissimum",         g:"Plants",   prior:40,  curr:18,  chg:-55.0, obs:36,  corr:""},
+  {c:"Kidneyleaf white violet",        s:"Viola renifolia",                g:"Plants",   prior:13,  curr:6,   chg:-53.8, obs:12,  corr:""},
+  {c:"Plains fleabane",                s:"Erigeron modestus",              g:"Plants",   prior:58,  curr:28,  chg:-51.7, obs:50,  corr:""},
+  {c:"Sweet violet",                   s:"Viola odorata",                  g:"Plants",   prior:29,  curr:14,  chg:-51.7, obs:27,  corr:""},
+  {c:"Sudetic lousewort",              s:"Pedicularis sudetica",           g:"Plants",   prior:18,  curr:9,   chg:-50.0, obs:16,  corr:""},
+  {c:"Bird cherry",                    s:"Prunus padus",                   g:"Plants",   prior:14,  curr:7,   chg:-50.0, obs:14,  corr:""},
+  {c:"Orange day-lily",                s:"Hemerocallis fulva",             g:"Plants",   prior:10,  curr:5,   chg:-50.0, obs:10,  corr:""},
+  {c:"Dwarf phlox",                    s:"Phlox condensata",               g:"Plants",   prior:37,  curr:19,  chg:-48.6, obs:27,  corr:""},
+  {c:"Annual honesty",                 s:"Lunaria annua",                  g:"Plants",   prior:32,  curr:17,  chg:-46.9, obs:23,  corr:""},
+  {c:"Strawberry goosefoot",           s:"Blitum virgatum",                g:"Plants",   prior:15,  curr:8,   chg:-46.7, obs:13,  corr:""},
+  {c:"Small-flower beardtongue",       s:"Penstemon procerus",             g:"Plants",   prior:30,  curr:16,  chg:-46.7, obs:21,  corr:""},
+  {c:"Large-leaved avens",             s:"Geum macrophyllum",              g:"Plants",   prior:20,  curr:11,  chg:-45.0, obs:14,  corr:""},
+  {c:"Curveseed butterwort",           s:"Ceratocephala testiculata",      g:"Plants",   prior:38,  curr:21,  chg:-44.7, obs:20,  corr:""},
+  {c:"Alpine springbeauty",            s:"Claytonia megarhiza",            g:"Plants",   prior:154, curr:89,  chg:-42.2, obs:106, corr:""},
+  {c:"Golden saxifrage",               s:"Saxifraga chrysantha",           g:"Plants",   prior:12,  curr:7,   chg:-41.7, obs:11,  corr:""},
+  {c:"Showy alpine ragwort",           s:"Senecio amplectens",             g:"Plants",   prior:17,  curr:10,  chg:-41.2, obs:12,  corr:""},
+  {c:"Siberian crabapple",             s:"Malus baccata",                  g:"Plants",   prior:83,  curr:49,  chg:-41.0, obs:74,  corr:""},
+  {c:"Velvetweed",                     s:"Oenothera curtiflora",           g:"Plants",   prior:176, curr:105, chg:-40.3, obs:115, corr:""},
+
+  // ── MAMMALS ────────────────────────────────────────────────────────────────
+  {c:"Mountain goat",                  s:"Oreamnos americanus",            g:"Mammals",  prior:137, curr:43,  chg:-68.6, obs:93,  corr:""},
+  {c:"Long-tailed weasel",             s:"Neogale frenata",                g:"Mammals",  prior:17,  curr:6,   chg:-64.7, obs:17,  corr:""},
+  {c:"Domestic cat",                   s:"Felis catus",                    g:"Mammals",  prior:20,  curr:9,   chg:-55.0, obs:13,  corr:""},
+  {c:"Western meadow vole",            s:"Microtus drummondii",            g:"Mammals",  prior:36,  curr:21,  chg:-41.7, obs:33,  corr:""},
+  {c:"Northern pocket gopher",         s:"Thomomys talpoides",             g:"Mammals",  prior:12,  curr:7,   chg:-41.7, obs:10,  corr:""},
+
+  // ── ARACHNIDS ──────────────────────────────────────────────────────────────
+  {c:"Grass spiders",                  s:"Agelenopsis",                    g:"Arachnids",prior:175, curr:0,   chg:-100,  obs:133, corr:""},
+  {c:"Whirligig mites",                s:"Anystis",                        g:"Arachnids",prior:28,  curr:0,   chg:-100,  obs:16,  corr:""},
+  {c:"Hololena",                       s:"Hololena",                       g:"Arachnids",prior:16,  curr:0,   chg:-100,  obs:16,  corr:""},
+  {c:"Ebo",                            s:"Ebo",                            g:"Arachnids",prior:11,  curr:0,   chg:-100,  obs:10,  corr:""},
+  {c:"Sassacus papenhoei",             s:"Sassacus papenhoei",             g:"Arachnids",prior:29,  curr:12,  chg:-58.6, obs:10,  corr:""},
+
+  // ── REPTILES ───────────────────────────────────────────────────────────────
+  {c:"Greater short-horned lizard",    s:"Phrynosoma hernandesi",          g:"Reptiles", prior:34,  curr:9,   chg:-73.5, obs:27,  corr:""},
+
+  // ── AMPHIBIANS ─────────────────────────────────────────────────────────────
+  {c:"Northern leopard frog",          s:"Lithobates pipiens",             g:"Amphibians",prior:52, curr:19,  chg:-63.5, obs:29,  corr:""},
+
+  // ── FUNGI ──────────────────────────────────────────────────────────────────
+  {c:"Oak-loving gymnopus",            s:"Gymnopus dryophilus",            g:"Fungi",    prior:14,  curr:1,   chg:-92.9, obs:11,  corr:""},
+  {c:"Crown rust",                     s:"Puccinia coronata",              g:"Fungi",    prior:18,  curr:2,   chg:-88.9, obs:13,  corr:""},
+  {c:"Spring orange peel fungus",      s:"Caloscypha fulgens",             g:"Fungi",    prior:29,  curr:5,   chg:-82.8, obs:17,  corr:""},
+  {c:"Purple spindles",                s:"Alloclavaria purpurea",          g:"Fungi",    prior:16,  curr:3,   chg:-81.2, obs:13,  corr:""},
+  {c:"American yellow morel",          s:"Morchella americana",            g:"Fungi",    prior:14,  curr:5,   chg:-64.3, obs:11,  corr:""},
+  {c:"Short-stemmed russula",          s:"Russula brevipes",               g:"Fungi",    prior:30,  curr:14,  chg:-53.3, obs:18,  corr:""},
+  {c:"Deceiver",                       s:"Laccaria laccata",               g:"Fungi",    prior:12,  curr:7,   chg:-41.7, obs:12,  corr:""},
+
+  // ── OTHER ──────────────────────────────────────────────────────────────────
+  {c:"Rathke's woodlouse",             s:"Trachelipus rathkii",            g:"Other",    prior:15,  curr:8,   chg:-46.7, obs:11,  corr:""},
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let activeGroup = "All";
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function chgDisplay(chg) {
+  if (chg <= -100) return `<span class="gone">Gone</span>`;
+  if (chg <= -70)  return `<span class="severe">${chg.toFixed(1)}%</span>`;
+  return `<span class="moderate">${chg.toFixed(1)}%</span>`;
+}
+
+function corrBadge(corr) {
+  if (corr === "corroborated")
+    return `<span class="badge-corroborated corr-tip rounded-full px-2 py-0.5 text-xs font-semibold" data-tip="Decline confirmed by an independent dataset">✓ Corroborated</span>`;
+  if (corr === "inat_only")
+    return `<span class="badge-inat corr-tip rounded-full px-2 py-0.5 text-xs font-medium" data-tip="Checked against another dataset — not independently confirmed">iNaturalist only</span>`;
+  return "";
+}
+
+const GROUP_COLORS = {
+  Birds: "bg-sky-100 text-sky-800",
+  Insects: "bg-amber-100 text-amber-800",
+  Plants: "bg-emerald-100 text-emerald-800",
+  Mammals: "bg-orange-100 text-orange-800",
+  Arachnids: "bg-purple-100 text-purple-800",
+  Fungi: "bg-yellow-100 text-yellow-800",
+  Reptiles: "bg-lime-100 text-lime-800",
+  Amphibians: "bg-teal-100 text-teal-800",
+  Other: "bg-gray-100 text-gray-700",
+};
+
+function renderTable(rows) {
+  const tbody = document.getElementById("species-tbody");
+  const noResults = document.getElementById("no-results");
+  const countEl = document.getElementById("group-count");
+
+  if (rows.length === 0) {
+    tbody.innerHTML = "";
+    noResults.classList.remove("hidden");
+    countEl.textContent = "0 species";
+    return;
+  }
+  noResults.classList.add("hidden");
+  countEl.textContent = `${rows.length} species`;
+
+  tbody.innerHTML = rows.map(sp => {
+    const gc = GROUP_COLORS[sp.g] || "bg-gray-100 text-gray-700";
+    return `<tr>
+      <td class="font-medium text-gray-900">${sp.c}</td>
+      <td class="sci-name text-gray-400 italic text-xs">${sp.s}</td>
+      <td><span class="rounded-full px-2 py-0.5 text-xs font-medium ${gc}">${sp.g}</span></td>
+      <td class="text-right tabular-nums">${chgDisplay(sp.chg)}</td>
+      <td class="text-right tabular-nums text-gray-600">${sp.obs}</td>
+      <td class="text-center">${corrBadge(sp.corr)}</td>
+    </tr>`;
+  }).join("");
+}
+
+// ─── FILTER ───────────────────────────────────────────────────────────────────
+function filterTable() {
+  const query = document.getElementById("search").value.toLowerCase().trim();
+  const filtered = SPECIES.filter(sp => {
+    const matchGroup = activeGroup === "All" || sp.g === activeGroup;
+    const matchSearch = !query || sp.c.toLowerCase().includes(query) || sp.s.toLowerCase().includes(query);
+    return matchGroup && matchSearch;
+  });
+  renderTable(filtered);
+}
+
+function setGroup(btn) {
+  activeGroup = btn.dataset.group;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  filterTable();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+// Sort by decline severity (most negative first)
+SPECIES.sort((a, b) => a.chg - b.chg);
+renderTable(SPECIES);
+</script>
+</body>
+</html>
