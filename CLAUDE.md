@@ -57,15 +57,28 @@ front-range-wildlife/
 │   │                              # the declining species report against GBIF occurrence
 │   │                              # data. Classifies each as CORROBORATED, CONTRADICTED,
 │   │                              # or INSUFFICIENT DATA. No API key required.
-│   └── generate_pdf.py            # Renders declining_species.md to a styled PDF using
-│                                  # the markdown + playwright (headless Chromium) stack.
-│                                  # Output: reports/declining_species.pdf.
+│   ├── generate_pdf.py            # Renders declining_species.md to a styled PDF using
+│   │                              # the markdown + playwright (headless Chromium) stack.
+│   │                              # Output: reports/declining_species.pdf.
+│   └── rmnp_comparison.py         # Compares the 5 genuinely corroborated species against
+│                                  # iNaturalist data centered on Estes Park (RMNP) to
+│                                  # classify each as REGIONAL DECLINE, LOCAL PRESSURE,
+│                                  # or INSUFFICIENT DATA. Uses fixed date ranges matching
+│                                  # the original declining_species.md run. No API key needed.
+│
+├── docs/
+│   └── index.html                 # Public-facing single-file web dashboard. All CSS and JS
+│                                  # embedded. Opens directly in a browser — no server needed.
+│                                  # Shows hero stats, 3 key-finding cards, and a full
+│                                  # 111-species filterable/searchable table with corroboration
+│                                  # badges. Hosted via GitHub Pages.
 │
 └── reports/
     ├── inat_signal_test.md        # Auto-generated. Do not edit by hand.
     ├── declining_species.md       # Auto-generated. Do not edit by hand.
     ├── ebird_crossref.md          # Auto-generated. Do not edit by hand.
     ├── gbif_crossref.md           # Auto-generated. Do not edit by hand.
+    ├── rmnp_comparison.md         # Auto-generated. Do not edit by hand.
     └── declining_species.pdf      # Auto-generated. Do not edit by hand.
 ```
 
@@ -100,6 +113,17 @@ Output saved to `reports/ebird_crossref.md`.
 
 Requires `EBIRD_API_KEY` set as a Windows environment variable (free key from https://ebird.org/api/keygen).
 Set it once in PowerShell: `[System.Environment]::SetEnvironmentVariable("EBIRD_API_KEY", "your_key", "User")`
+
+**RMNP geographic comparison** (~1 min, no API key):
+```bash
+cd C:\Users\User\front-range-wildlife
+python scripts/rmnp_comparison.py
+```
+Output saved to `reports/rmnp_comparison.md`.
+
+Compares the 5 genuinely corroborated species against a 50-mile radius around Estes Park, CO.
+Uses **fixed date ranges** matching the original declining_species.md run — do not change these
+to rolling windows or the Front Range counts (hard-coded from the report) become non-comparable.
 
 ---
 
@@ -170,6 +194,42 @@ The remaining 14 species split as: **9 CONTRADICTED** (eBird stable or growing �
 - Other flagged groups: Plants 42, Birds 25, Arachnids 12, Fungi 11, Mammals 5
 - Notable findings: Grass spiders (175 → 0), Black swallowtail (−76%), Northern leopard frog (−63%), Greater short-horned lizard (−73%), three gentian species all 70%+ down
 - Threshold used: 40% decline, minimum 10 prior observations
+
+---
+
+## RMNP Comparison Results (run: 2026-03-17)
+
+Tests whether the 5 genuinely corroborated species are also declining in Rocky Mountain National
+Park — separating regional causes (climate, migration) from local urban habitat pressure.
+
+| Species | FR Change | RMNP Change | Classification |
+|---|---|---|---|
+| Brown-capped Rosy-Finch | −42.9% | −64.4% | **REGIONAL DECLINE** |
+| Cassin's Finch | −70.6% | −6.2% | **LOCAL PRESSURE** |
+| Horace's Duskywing | −43.8% | 1 prior obs | INSUFFICIENT DATA (sparse) |
+| Yellow-billed Loon | Disappeared | — | INSUFFICIENT DATA (habitat mismatch) |
+| Curve-billed Thrasher | Disappeared | — | INSUFFICIENT DATA (habitat mismatch) |
+
+**Key finding:** Brown-capped Rosy-Finch declining harder in RMNP (−64.4%) than Front Range —
+both sites down, points to regional/climate driver. Cassin's Finch stable in RMNP while collapsing
+on Front Range — local urban-edge habitat pressure is the more likely cause.
+
+**Habitat mismatch note:** Yellow-billed Loon and Curve-billed Thrasher are INSUFFICIENT DATA
+because RMNP has no suitable habitat for either (large-reservoir water bird; desert scrub species).
+This is structurally uninformative, not a sample size problem. Different control sites needed.
+
+---
+
+## Public Dashboard
+
+**URL:** https://kellyandrewb-blip.github.io/front-range-wildlife/
+**File:** `docs/index.html` — single self-contained HTML file, no build step, no server.
+
+Enable GitHub Pages: repo Settings → Pages → Source: Deploy from branch → Branch: master, folder: /docs.
+
+Dashboard contains: hero stats, three key-finding cards (insect decline, two-birds comparison,
+methodology), and a 111-species filterable table with real-time search and corroboration badges.
+Species data is hard-coded as a JS array — update it when re-running the analysis scripts.
 
 ---
 
