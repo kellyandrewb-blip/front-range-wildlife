@@ -222,14 +222,18 @@ This is structurally uninformative, not a sample size problem. Different control
 
 ## Public Dashboard
 
-**URL:** https://kellyandrewb-blip.github.io/front-range-wildlife/
+**Live URL:** https://kellyandrewb-blip.github.io/front-range-wildlife/
 **File:** `docs/index.html` — single self-contained HTML file, no build step, no server.
 
-Enable GitHub Pages: repo Settings → Pages → Source: Deploy from branch → Branch: master, folder: /docs.
+GitHub Pages is enabled: repo Settings → Pages → Branch: master, folder: /docs.
 
 Dashboard contains: hero stats, three key-finding cards (insect decline, two-birds comparison,
 methodology), and a 111-species filterable table with real-time search and corroboration badges.
 Species data is hard-coded as a JS array — update it when re-running the analysis scripts.
+
+**Mobile layout:** Cards stack vertically on screens under 768px (Tailwind `md:grid-cols-3`).
+Table hides Scientific Name and Prior Observers columns on mobile (`hidden md:table-cell`);
+table container is horizontally scrollable as a fallback (`overflow-x: auto`).
 
 ---
 
