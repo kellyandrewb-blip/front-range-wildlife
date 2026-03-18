@@ -24,7 +24,7 @@
     .badge-inat         { background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
 
     /* Table */
-    .table-wrap { border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .table-wrap { border-radius: 10px; overflow-x: auto; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
     thead th { background: #1a3a2a; color: #d1fae5; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 14px; }
     tbody tr { border-bottom: 1px solid #e8ede8; transition: background 0.1s; }
     tbody tr:hover { background: #f0fdf4; }
@@ -50,8 +50,6 @@
 
     @media (max-width: 640px) {
       .hero-stats { grid-template-columns: 1fr 1fr; }
-      .cards-grid { grid-template-columns: 1fr; }
-      .sci-name { display: none; }
     }
   </style>
 </head>
@@ -97,7 +95,7 @@
   <h2 class="text-2xl font-bold text-gray-800 mb-2">Key Findings</h2>
   <p class="text-gray-500 text-sm mb-8">What the data shows — and what we can act on.</p>
 
-  <div class="cards-grid grid grid-cols-3 gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
     <!-- Card 1: Insect Decline -->
     <div class="card-insect rounded-xl p-6 shadow-sm">
@@ -195,10 +193,10 @@
       <thead>
         <tr>
           <th class="text-left">Common Name</th>
-          <th class="text-left sci-name">Scientific Name</th>
+          <th class="text-left hidden md:table-cell">Scientific Name</th>
           <th class="text-left">Group</th>
           <th class="text-right">Decline</th>
-          <th class="text-right">Prior Observers</th>
+          <th class="text-right hidden md:table-cell">Prior Observers</th>
           <th class="text-center">Corroboration</th>
         </tr>
       </thead>
@@ -417,10 +415,10 @@ function renderTable(rows) {
     const gc = GROUP_COLORS[sp.g] || "bg-gray-100 text-gray-700";
     return `<tr>
       <td class="font-medium text-gray-900">${sp.c}</td>
-      <td class="sci-name text-gray-400 italic text-xs">${sp.s}</td>
+      <td class="hidden md:table-cell text-gray-400 italic text-xs">${sp.s}</td>
       <td><span class="rounded-full px-2 py-0.5 text-xs font-medium ${gc}">${sp.g}</span></td>
       <td class="text-right tabular-nums">${chgDisplay(sp.chg)}</td>
-      <td class="text-right tabular-nums text-gray-600">${sp.obs}</td>
+      <td class="text-right tabular-nums text-gray-600 hidden md:table-cell">${sp.obs}</td>
       <td class="text-center">${corrBadge(sp.corr)}</td>
     </tr>`;
   }).join("");
