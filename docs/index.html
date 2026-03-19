@@ -169,7 +169,7 @@
         Plum Creek entered drought stress in <strong>July 2025</strong> — five months below 75% of normal flow before winter arrived. During those months, bird activity dropped ~50%. The strongest signal in the dataset: Plum Creek discharge vs. bird observations, <strong>r = 0.78 (p = 0.004)</strong>.
       </p>
       <p class="text-gray-700 text-sm leading-relaxed mb-4">
-        <strong>Horace's Duskywing</strong> was observed only during adequate-flow months — zero observations in seven consecutive drought months. <strong>Northern Rough-winged Swallow</strong> disappeared from the corridor entirely when flows dropped below 26% of normal.
+        <strong>Northern Rough-winged Swallow</strong> disappeared from the corridor entirely when flows dropped below 26% of normal. Horace's Duskywing was absent during the seven-month low-flow period, though this coincides with the natural end of its flight season — a 7-year correlation test found no significant relationship with discharge (r = 0.11).
       </p>
       <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-xs text-teal-800">
         The jumping spider <em>Pelegrina sabinema</em> showed the strongest species-level flow correlation in corridor data (r = 0.69, p = 0.019), but does not appear among the 111 declining species in this dataset.
@@ -193,7 +193,7 @@
       </li>
       <li class="flex gap-2">
         <span class="text-teal-700 font-bold shrink-0">3.</span>
-        <span><strong>Focus insect observations within 5km of the creek.</strong> The 50-mile analysis radius captures too much upland territory for stream-dependent insects to show a clear signal. Observations from inside the Plum Creek corridor would directly test whether the 46 declining insect species are responding to water conditions.</span>
+        <span><strong>Log insect observations along Plum Creek, especially in spring.</strong> A corridor-level analysis found that most of the 46 declining insect species are rarely or never recorded along Plum Creek — upland and foothill species make up the bulk of regional observations. Species that <em>do</em> use the creek (Black swallowtail, Pale green assassin bug, and Nessus sphinx appear most consistently) are the ones worth watching for long-term trends.</span>
       </li>
       <li class="flex gap-2">
         <span class="text-teal-700 font-bold shrink-0">4.</span>
@@ -254,6 +254,7 @@
     <span class="badge-flow-correlated rounded-full px-2 py-0.5 font-medium">Flow Correlated</span>
     <span class="badge-high-flow-only rounded-full px-2 py-0.5 font-medium">High Flow</span>
     <span class="badge-corridor rounded-full px-2 py-0.5 font-medium">Corridor</span>
+    <span>— observed within the Plum Creek corridor (not flow-correlated)</span>
   </div>
 
   <div class="table-wrap bg-white">
@@ -327,7 +328,7 @@ const SPECIES = [
 
   // ── INSECTS ────────────────────────────────────────────────────────────────
   // 1 genuine GBIF corroboration; 28 GBIF limited (inat_only); 6 GBIF contradicted (inat_only); 11 GBIF insufficient ("")
-  {c:"Horace's duskywing",             s:"Erynnis horatius",               g:"Insects",  prior:32,  curr:18,  chg:-43.8, obs:13,  corr:"corroborated", water:"flow-correlated"},
+  {c:"Horace's duskywing",             s:"Erynnis horatius",               g:"Insects",  prior:32,  curr:18,  chg:-43.8, obs:13,  corr:"corroborated", water:"corridor-present"},
   // GBIF limited independent data (28) — corroborated in GBIF but most records trace back to iNat
   {c:"Chryxus arctic",                 s:"Oeneis chryxus",                 g:"Insects",  prior:46,  curr:1,   chg:-97.8, obs:22,  corr:"inat_only",    water:""},
   {c:"Sphragisticus nebulosus",        s:"Sphragisticus nebulosus",        g:"Insects",  prior:52,  curr:5,   chg:-90.4, obs:30,  corr:"inat_only",    water:""},
