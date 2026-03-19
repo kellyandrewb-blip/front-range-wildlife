@@ -169,7 +169,7 @@
         Plum Creek entered drought stress in <strong>July 2025</strong> — five months below 75% of normal flow before winter arrived. During those months, bird activity dropped ~50%. The strongest signal in the dataset: Plum Creek discharge vs. bird observations, <strong>r = 0.78 (p = 0.004)</strong>.
       </p>
       <p class="text-gray-700 text-sm leading-relaxed mb-4">
-        <strong>Horace's Duskywing</strong> was observed only during adequate-flow months — zero observations in seven consecutive drought months. <strong>Northern Rough-winged Swallow</strong> disappeared from the corridor entirely when flows dropped below 31% of normal.
+        <strong>Horace's Duskywing</strong> was observed only during adequate-flow months — zero observations in seven consecutive drought months. <strong>Northern Rough-winged Swallow</strong> disappeared from the corridor entirely when flows dropped below 26% of normal.
       </p>
       <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-xs text-teal-800">
         The jumping spider <em>Pelegrina sabinema</em> showed the strongest species-level flow correlation in corridor data (r = 0.69, p = 0.019), but does not appear among the 111 declining species in this dataset.
@@ -177,6 +177,35 @@
     </div>
 
   </div>
+
+  <!-- Act On This — full-width card below the four finding cards -->
+  <div class="card-water rounded-xl p-6 shadow-sm mt-5">
+    <div class="text-teal-700 text-xs font-bold tracking-widest uppercase mb-3">Next Steps · Open to All</div>
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Act On This</h3>
+    <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-4 text-sm text-gray-700">
+      <li class="flex gap-2">
+        <span class="text-teal-700 font-bold shrink-0">1.</span>
+        <span><strong>Log waterbirds along Plum Creek on iNaturalist.</strong> Bird observations from this corridor predict stream discharge (r = 0.78) — the most reliable ecological signal in the dataset. Every sighting here makes the monitoring dataset more accurate.</span>
+      </li>
+      <li class="flex gap-2">
+        <span class="text-teal-700 font-bold shrink-0">2.</span>
+        <span><strong>Run a kick-net survey on Plum Creek.</strong> Caddisflies and stoneflies — the most sensitive biological indicators of stream health — show zero observations in this corridor. One physical survey in spring and late summer would confirm whether they've disappeared or just gone unsampled.</span>
+      </li>
+      <li class="flex gap-2">
+        <span class="text-teal-700 font-bold shrink-0">3.</span>
+        <span><strong>Focus insect observations within 5km of the creek.</strong> The 50-mile analysis radius captures too much upland territory for stream-dependent insects to show a clear signal. Observations from inside the Plum Creek corridor would directly test whether the 46 declining insect species are responding to water conditions.</span>
+      </li>
+      <li class="flex gap-2">
+        <span class="text-teal-700 font-bold shrink-0">4.</span>
+        <span><strong>Watch Black swallowtail at South Platte access points.</strong> This common butterfly tracks South Platte discharge over 7 years of data (r = 0.53). It's a visible, cost-free indicator for the health of Colorado's main stem river — one any observer can contribute to.</span>
+      </li>
+      <li class="flex gap-2">
+        <span class="text-teal-700 font-bold shrink-0">5.</span>
+        <span><strong>Build on this data.</strong> Every script, dataset, and methodology behind this report is publicly available on <a href="https://github.com/kellyandrewb-blip/front-range-wildlife" class="underline text-teal-700 hover:text-teal-900" target="_blank" rel="noopener">GitHub</a>. Replicate it, extend it, or adapt it to a different watershed.</span>
+      </li>
+    </ol>
+  </div>
+
 </section>
 
 <!-- ═══════════════════════ SPECIES TABLE ═══════════════════════ -->
@@ -277,20 +306,20 @@
 const SPECIES = [
   // ── BIRDS ──────────────────────────────────────────────────────────────────
   // 4 corroborated by eBird; 5 insufficient eBird data (no badge); 9 contradicted by eBird (inat_only)
-  {c:"Yellow-billed loon",             s:"Gavia adamsii",                  g:"Birds",    prior:15,  curr:0,   chg:-100,  obs:14,  corr:"corroborated", water:""},
+  {c:"Yellow-billed loon",             s:"Gavia adamsii",                  g:"Birds",    prior:15,  curr:0,   chg:-100,  obs:14,  corr:"corroborated", water:"corridor-present"},
   {c:"Curve-billed thrasher",          s:"Toxostoma curvirostre",          g:"Birds",    prior:12,  curr:0,   chg:-100,  obs:11,  corr:"corroborated", water:""},
   {c:"Brown-capped rosy-finch",        s:"Leucosticte australis",          g:"Birds",    prior:28,  curr:16,  chg:-42.9, obs:13,  corr:"corroborated", water:""},
-  {c:"Cassin's finch",                 s:"Haemorhous cassinii",            g:"Birds",    prior:17,  curr:5,   chg:-70.6, obs:11,  corr:"corroborated", water:""},
+  {c:"Cassin's finch",                 s:"Haemorhous cassinii",            g:"Birds",    prior:17,  curr:5,   chg:-70.6, obs:11,  corr:"corroborated", water:"corridor-present"},
   {c:"Swainson's thrush",              s:"Catharus ustulatus",             g:"Birds",    prior:13,  curr:2,   chg:-84.6, obs:11,  corr:"inat_only",    water:"corridor-present"},
   {c:"Eastern screech-owl",            s:"Megascops asio",                 g:"Birds",    prior:29,  curr:9,   chg:-69.0, obs:25,  corr:"inat_only",    water:"corridor-present"},
-  {c:"Virginia's warbler",             s:"Leiothlypis virginiae",          g:"Birds",    prior:12,  curr:4,   chg:-66.7, obs:11,  corr:"inat_only",    water:""},
+  {c:"Virginia's warbler",             s:"Leiothlypis virginiae",          g:"Birds",    prior:12,  curr:4,   chg:-66.7, obs:11,  corr:"inat_only",    water:"corridor-present"},
   {c:"Eared grebe",                    s:"Podiceps nigricollis",           g:"Birds",    prior:34,  curr:12,  chg:-64.7, obs:18,  corr:"inat_only",    water:"corridor-present"},
   {c:"Canyon wren",                    s:"Catherpes mexicanus",            g:"Birds",    prior:14,  curr:6,   chg:-57.1, obs:12,  corr:"inat_only",    water:""},
   {c:"Savannah sparrow",               s:"Passerculus sandwichensis",      g:"Birds",    prior:23,  curr:11,  chg:-52.2, obs:14,  corr:"inat_only",    water:"corridor-present"},
-  {c:"Barrow's goldeneye",             s:"Bucephala islandica",            g:"Birds",    prior:16,  curr:9,   chg:-43.8, obs:11,  corr:"inat_only",    water:""},
+  {c:"Barrow's goldeneye",             s:"Bucephala islandica",            g:"Birds",    prior:16,  curr:9,   chg:-43.8, obs:11,  corr:"inat_only",    water:"corridor-present"},
   {c:"Northern rough-winged swallow",  s:"Stelgidopteryx serripennis",     g:"Birds",    prior:34,  curr:20,  chg:-41.2, obs:21,  corr:"inat_only",    water:"high-flow-only"},
   {c:"American barn owl",              s:"Tyto furcata",                   g:"Birds",    prior:15,  curr:9,   chg:-40.0, obs:13,  corr:"inat_only",    water:""},
-  {c:"Glossy ibis",                    s:"Plegadis falcinellus",           g:"Birds",    prior:11,  curr:0,   chg:-100,  obs:10,  corr:"",             water:""},
+  {c:"Glossy ibis",                    s:"Plegadis falcinellus",           g:"Birds",    prior:11,  curr:0,   chg:-100,  obs:10,  corr:"",             water:"corridor-present"},
   {c:"White-winged scoter",            s:"Melanitta deglandi",             g:"Birds",    prior:14,  curr:1,   chg:-92.9, obs:13,  corr:"",             water:"corridor-present"},
   {c:"Varied thrush",                  s:"Ixoreus naevius",                g:"Birds",    prior:12,  curr:1,   chg:-91.7, obs:12,  corr:"",             water:""},
   {c:"Northern shrike",                s:"Lanius borealis",                g:"Birds",    prior:37,  curr:9,   chg:-75.7, obs:25,  corr:"",             water:""},
@@ -302,51 +331,51 @@ const SPECIES = [
   // GBIF limited independent data (28) — corroborated in GBIF but most records trace back to iNat
   {c:"Chryxus arctic",                 s:"Oeneis chryxus",                 g:"Insects",  prior:46,  curr:1,   chg:-97.8, obs:22,  corr:"inat_only",    water:""},
   {c:"Sphragisticus nebulosus",        s:"Sphragisticus nebulosus",        g:"Insects",  prior:52,  curr:5,   chg:-90.4, obs:30,  corr:"inat_only",    water:""},
-  {c:"Colorado hairstreak",            s:"Hypaurotis crysalus",            g:"Insects",  prior:25,  curr:3,   chg:-88.0, obs:16,  corr:"inat_only",    water:""},
-  {c:"Strawberry crown moth",          s:"Synanthedon bibionipennis",      g:"Insects",  prior:14,  curr:2,   chg:-85.7, obs:12,  corr:"inat_only",    water:""},
+  {c:"Colorado hairstreak",            s:"Hypaurotis crysalus",            g:"Insects",  prior:25,  curr:3,   chg:-88.0, obs:16,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Strawberry crown moth",          s:"Synanthedon bibionipennis",      g:"Insects",  prior:14,  curr:2,   chg:-85.7, obs:12,  corr:"inat_only",    water:"corridor-present"},
   {c:"White slant-line",               s:"Tetracis cachexiata",            g:"Insects",  prior:12,  curr:2,   chg:-83.3, obs:10,  corr:"inat_only",    water:""},
-  {c:"Charcoal seed bug",              s:"Melacoryphus lateralis",         g:"Insects",  prior:31,  curr:6,   chg:-80.6, obs:22,  corr:"inat_only",    water:""},
+  {c:"Charcoal seed bug",              s:"Melacoryphus lateralis",         g:"Insects",  prior:31,  curr:6,   chg:-80.6, obs:22,  corr:"inat_only",    water:"corridor-present"},
   {c:"Arctic fritillary",              s:"Boloria chariclea",              g:"Insects",  prior:38,  curr:8,   chg:-78.9, obs:15,  corr:"inat_only",    water:""},
   {c:"Nessus sphinx",                  s:"Amphion floridensis",            g:"Insects",  prior:32,  curr:7,   chg:-78.1, obs:31,  corr:"inat_only",    water:""},
-  {c:"Black swallowtail",              s:"Papilio polyxenes",              g:"Insects",  prior:102, curr:24,  chg:-76.5, obs:80,  corr:"inat_only",    water:""},
+  {c:"Black swallowtail",              s:"Papilio polyxenes",              g:"Insects",  prior:102, curr:24,  chg:-76.5, obs:80,  corr:"inat_only",    water:"corridor-present"},
   {c:"St. Lawrence tiger moth",        s:"Arctia parthenos",               g:"Insects",  prior:11,  curr:3,   chg:-72.7, obs:10,  corr:"inat_only",    water:""},
-  {c:"Coral hairstreak",               s:"Satyrium titus",                 g:"Insects",  prior:18,  curr:5,   chg:-72.2, obs:10,  corr:"inat_only",    water:""},
-  {c:"Hedgerow hairstreak",            s:"Satyrium saepium",               g:"Insects",  prior:16,  curr:5,   chg:-68.8, obs:10,  corr:"inat_only",    water:""},
+  {c:"Coral hairstreak",               s:"Satyrium titus",                 g:"Insects",  prior:18,  curr:5,   chg:-72.2, obs:10,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Hedgerow hairstreak",            s:"Satyrium saepium",               g:"Insects",  prior:16,  curr:5,   chg:-68.8, obs:10,  corr:"inat_only",    water:"corridor-present"},
   {c:"Three-spotted flea beetle",      s:"Disonycha triangularis",         g:"Insects",  prior:32,  curr:10,  chg:-68.8, obs:24,  corr:"inat_only",    water:"corridor-present"},
   {c:"Crocus geometer moths",          s:"Xanthotype",                     g:"Insects",  prior:13,  curr:4,   chg:-69.2, obs:11,  corr:"inat_only",    water:""},
   {c:"Shortwing stonefly",             s:"Claassenia sabulosa",            g:"Insects",  prior:13,  curr:5,   chg:-61.5, obs:10,  corr:"inat_only",    water:""},
   {c:"Fall webworm moth",              s:"Hyphantria cunea",               g:"Insects",  prior:20,  curr:8,   chg:-60.0, obs:18,  corr:"inat_only",    water:""},
   {c:"Argus tortoise beetle",          s:"Chelymorpha cassidea",           g:"Insects",  prior:10,  curr:4,   chg:-60.0, obs:10,  corr:"inat_only",    water:""},
-  {c:"Painted schinia moth",           s:"Schinia volupia",                g:"Insects",  prior:41,  curr:17,  chg:-58.5, obs:23,  corr:"inat_only",    water:""},
+  {c:"Painted schinia moth",           s:"Schinia volupia",                g:"Insects",  prior:41,  curr:17,  chg:-58.5, obs:23,  corr:"inat_only",    water:"corridor-present"},
   {c:"Douglas-fir tussock moth",       s:"Orgyia pseudotsugata",           g:"Insects",  prior:195, curr:87,  chg:-55.4, obs:156, corr:"inat_only",    water:""},
-  {c:"Snowberry clearwing",            s:"Hemaris diffinis",               g:"Insects",  prior:20,  curr:9,   chg:-55.0, obs:15,  corr:"inat_only",    water:""},
-  {c:"Pallid-winged grasshopper",      s:"Trimerotropis pallidipennis",    g:"Insects",  prior:24,  curr:11,  chg:-54.2, obs:21,  corr:"inat_only",    water:""},
-  {c:"Estigmene albida",               s:"Estigmene albida",               g:"Insects",  prior:12,  curr:6,   chg:-50.0, obs:11,  corr:"inat_only",    water:""},
+  {c:"Snowberry clearwing",            s:"Hemaris diffinis",               g:"Insects",  prior:20,  curr:9,   chg:-55.0, obs:15,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Pallid-winged grasshopper",      s:"Trimerotropis pallidipennis",    g:"Insects",  prior:24,  curr:11,  chg:-54.2, obs:21,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Estigmene albida",               s:"Estigmene albida",               g:"Insects",  prior:12,  curr:6,   chg:-50.0, obs:11,  corr:"inat_only",    water:"corridor-present"},
   {c:"Arctic blue",                    s:"Agriades glandon",               g:"Insects",  prior:60,  curr:32,  chg:-46.7, obs:31,  corr:"inat_only",    water:""},
-  {c:"Thinker moth",                   s:"Lacinipolia meditata",           g:"Insects",  prior:23,  curr:13,  chg:-43.5, obs:10,  corr:"inat_only",    water:""},
-  {c:"Draco skipper",                  s:"Polites draco",                  g:"Insects",  prior:23,  curr:13,  chg:-43.5, obs:13,  corr:"inat_only",    water:""},
-  {c:"Three-banded grasshopper",       s:"Hadrotettix trifasciatus",       g:"Insects",  prior:16,  curr:9,   chg:-43.8, obs:12,  corr:"inat_only",    water:""},
-  {c:"Eastern black carpenter ant",    s:"Camponotus pennsylvanicus",      g:"Insects",  prior:26,  curr:15,  chg:-42.3, obs:20,  corr:"inat_only",    water:""},
+  {c:"Thinker moth",                   s:"Lacinipolia meditata",           g:"Insects",  prior:23,  curr:13,  chg:-43.5, obs:10,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Draco skipper",                  s:"Polites draco",                  g:"Insects",  prior:23,  curr:13,  chg:-43.5, obs:13,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Three-banded grasshopper",       s:"Hadrotettix trifasciatus",       g:"Insects",  prior:16,  curr:9,   chg:-43.8, obs:12,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Eastern black carpenter ant",    s:"Camponotus pennsylvanicus",      g:"Insects",  prior:26,  curr:15,  chg:-42.3, obs:20,  corr:"inat_only",    water:"corridor-present"},
   {c:"Isabella tiger moth",            s:"Pyrrharctia isabella",           g:"Insects",  prior:62,  curr:36,  chg:-41.9, obs:57,  corr:"inat_only",    water:""},
   {c:"Club-horned grasshopper",        s:"Aeropedellus clavatus",          g:"Insects",  prior:12,  curr:7,   chg:-41.7, obs:10,  corr:"inat_only",    water:""},
   // GBIF contradicted — GBIF shows stable or smaller decline
-  {c:"Pale green assassin bug",        s:"Zelus luridus",                  g:"Insects",  prior:163, curr:97,  chg:-40.5, obs:125, corr:"inat_only",    water:""},
+  {c:"Pale green assassin bug",        s:"Zelus luridus",                  g:"Insects",  prior:163, curr:97,  chg:-40.5, obs:125, corr:"inat_only",    water:"corridor-present"},
   {c:"Delaware skipper",               s:"Anatrytone logan",               g:"Insects",  prior:30,  curr:18,  chg:-40.0, obs:15,  corr:"inat_only",    water:""},
-  {c:"Ferruginous tiger crane fly",    s:"Nephrotoma ferruginea",          g:"Insects",  prior:15,  curr:9,   chg:-40.0, obs:14,  corr:"inat_only",    water:""},
+  {c:"Ferruginous tiger crane fly",    s:"Nephrotoma ferruginea",          g:"Insects",  prior:15,  curr:9,   chg:-40.0, obs:14,  corr:"inat_only",    water:"corridor-present"},
   {c:"Larder beetle",                  s:"Dermestes lardarius",            g:"Insects",  prior:11,  curr:6,   chg:-45.5, obs:11,  corr:"inat_only",    water:""},
-  {c:"Indiscriminate cuckoo bumble bee",s:"Bombus insularis",              g:"Insects",  prior:18,  curr:10,  chg:-44.4, obs:14,  corr:"inat_only",    water:""},
-  {c:"Four-spurred assassin bug",      s:"Zelus tetracanthus",             g:"Insects",  prior:13,  curr:7,   chg:-46.2, obs:12,  corr:"inat_only",    water:""},
+  {c:"Indiscriminate cuckoo bumble bee",s:"Bombus insularis",              g:"Insects",  prior:18,  curr:10,  chg:-44.4, obs:14,  corr:"inat_only",    water:"corridor-present"},
+  {c:"Four-spurred assassin bug",      s:"Zelus tetracanthus",             g:"Insects",  prior:13,  curr:7,   chg:-46.2, obs:12,  corr:"inat_only",    water:"corridor-present"},
   // GBIF insufficient data (11)
   {c:"Condylostylus caudatus",         s:"Condylostylus caudatus",         g:"Insects",  prior:51,  curr:0,   chg:-100,  obs:21,  corr:"",             water:"corridor-present"},
   {c:"Diplotaxis",                     s:"Diplotaxis",                     g:"Insects",  prior:35,  curr:0,   chg:-100,  obs:19,  corr:"",             water:""},
-  {c:"Lycus sanguinipennis",           s:"Lycus sanguinipennis",           g:"Insects",  prior:31,  curr:8,   chg:-74.2, obs:26,  corr:"",             water:""},
+  {c:"Lycus sanguinipennis",           s:"Lycus sanguinipennis",           g:"Insects",  prior:31,  curr:8,   chg:-74.2, obs:26,  corr:"",             water:"corridor-present"},
   {c:"Alfalfa looper moth",            s:"Tathorhynchus exsiccata",        g:"Insects",  prior:17,  curr:5,   chg:-70.6, obs:13,  corr:"",             water:""},
   {c:"Lesser house fly",               s:"Fannia canicularis",             g:"Insects",  prior:17,  curr:6,   chg:-64.7, obs:11,  corr:"",             water:""},
-  {c:"North American tarnished plant bug",s:"Lygus lineolaris",            g:"Insects",  prior:17,  curr:6,   chg:-64.7, obs:14,  corr:"",             water:""},
+  {c:"North American tarnished plant bug",s:"Lygus lineolaris",            g:"Insects",  prior:17,  curr:6,   chg:-64.7, obs:14,  corr:"",             water:"corridor-present"},
   {c:"Shiny blue bottle fly",          s:"Cynomya cadaverina",             g:"Insects",  prior:21,  curr:8,   chg:-61.9, obs:16,  corr:"",             water:""},
   {c:"Poplar twiggall fly",            s:"Euhexomyza schineri",            g:"Insects",  prior:26,  curr:14,  chg:-46.2, obs:10,  corr:"",             water:"corridor-present"},
-  {c:"Common house fly",               s:"Musca domestica",                g:"Insects",  prior:25,  curr:11,  chg:-56.0, obs:21,  corr:"",             water:""},
-  {c:"Parallel leafcutter bee",        s:"Megachile parallela",            g:"Insects",  prior:25,  curr:12,  chg:-52.0, obs:20,  corr:"",             water:""},
+  {c:"Common house fly",               s:"Musca domestica",                g:"Insects",  prior:25,  curr:11,  chg:-56.0, obs:21,  corr:"",             water:"corridor-present"},
+  {c:"Parallel leafcutter bee",        s:"Megachile parallela",            g:"Insects",  prior:25,  curr:12,  chg:-52.0, obs:20,  corr:"",             water:"corridor-present"},
 
   // ── PLANTS ─────────────────────────────────────────────────────────────────
   {c:"Silvery bryum",                  s:"Bryum argenteum",                g:"Plants",   prior:348, curr:42,  chg:-87.9, obs:13,  corr:"",             water:""},
@@ -385,17 +414,17 @@ const SPECIES = [
   {c:"Northern pocket gopher",         s:"Thomomys talpoides",             g:"Mammals",  prior:12,  curr:7,   chg:-41.7, obs:10,  corr:"",             water:""},
 
   // ── ARACHNIDS ──────────────────────────────────────────────────────────────
-  {c:"Grass spiders",                  s:"Agelenopsis",                    g:"Arachnids",prior:175, curr:0,   chg:-100,  obs:133, corr:"",             water:""},
-  {c:"Whirligig mites",                s:"Anystis",                        g:"Arachnids",prior:28,  curr:0,   chg:-100,  obs:16,  corr:"",             water:""},
-  {c:"Hololena",                       s:"Hololena",                       g:"Arachnids",prior:16,  curr:0,   chg:-100,  obs:16,  corr:"",             water:""},
-  {c:"Ebo",                            s:"Ebo",                            g:"Arachnids",prior:11,  curr:0,   chg:-100,  obs:10,  corr:"",             water:""},
-  {c:"Sassacus papenhoei",             s:"Sassacus papenhoei",             g:"Arachnids",prior:29,  curr:12,  chg:-58.6, obs:10,  corr:"",             water:""},
+  {c:"Grass spiders",                  s:"Agelenopsis",                    g:"Arachnids",prior:175, curr:0,   chg:-100,  obs:133, corr:"",             water:"corridor-present"},
+  {c:"Whirligig mites",                s:"Anystis",                        g:"Arachnids",prior:28,  curr:0,   chg:-100,  obs:16,  corr:"",             water:"corridor-present"},
+  {c:"Hololena",                       s:"Hololena",                       g:"Arachnids",prior:16,  curr:0,   chg:-100,  obs:16,  corr:"",             water:"corridor-present"},
+  {c:"Ebo",                            s:"Ebo",                            g:"Arachnids",prior:11,  curr:0,   chg:-100,  obs:10,  corr:"",             water:"corridor-present"},
+  {c:"Sassacus papenhoei",             s:"Sassacus papenhoei",             g:"Arachnids",prior:29,  curr:12,  chg:-58.6, obs:10,  corr:"",             water:"corridor-present"},
 
   // ── REPTILES ───────────────────────────────────────────────────────────────
   {c:"Greater short-horned lizard",    s:"Phrynosoma hernandesi",          g:"Reptiles", prior:34,  curr:9,   chg:-73.5, obs:27,  corr:"",             water:""},
 
   // ── AMPHIBIANS ─────────────────────────────────────────────────────────────
-  {c:"Northern leopard frog",          s:"Lithobates pipiens",             g:"Amphibians",prior:52, curr:19,  chg:-63.5, obs:29,  corr:"",             water:""},
+  {c:"Northern leopard frog",          s:"Lithobates pipiens",             g:"Amphibians",prior:52, curr:19,  chg:-63.5, obs:29,  corr:"",             water:"corridor-present"},
 
   // ── FUNGI ──────────────────────────────────────────────────────────────────
   {c:"Oak-loving gymnopus",            s:"Gymnopus dryophilus",            g:"Fungi",    prior:14,  curr:1,   chg:-92.9, obs:11,  corr:"",             water:""},
