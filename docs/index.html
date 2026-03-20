@@ -120,8 +120,8 @@
     <p style="color:#374151; font-size:0.975rem; line-height:1.75; margin-bottom:0;">
       Starting in July 2025, Plum Creek — a narrow riparian corridor running through Highlands Ranch — spent five consecutive months carrying only 27 to 40 percent of its normal water volume.
       During those same months, bird activity along the creek dropped by roughly half compared to the year before.
-      When flows fell to their lowest point, a species called the Northern Rough-winged Swallow — a small, fast-moving bird that nests in creek banks and hunts insects over open water — stopped appearing entirely.
-      It came back only when flows recovered.
+      A species called the Northern Rough-winged Swallow — a small, fast-moving bird that nests in creek banks and hunts insects over open water — tracks the creek's flow cycle closely: present April through September, peaking in May when discharge is at its highest, and absent through the winter low-flow months.
+      Independent eBird data (71 observations) confirms the pattern, with the swallow's monthly count correlating with stream discharge at r = 0.677.
       This is the clearest signal in the entire two-year dataset: the health of this creek and the wildlife that depends on it are directly connected, and right now, the creek is under stress.
     </p>
   </div>
@@ -193,7 +193,7 @@
         Plum Creek entered drought stress in <strong>July 2025</strong> — five months below 75% of normal flow before winter arrived. During those months, bird activity dropped ~50%. The strongest signal in the dataset: Plum Creek discharge vs. bird observations, <strong>r = 0.78 (p = 0.004)</strong>.
       </p>
       <p class="text-gray-700 text-sm leading-relaxed mb-4">
-        <strong>Northern Rough-winged Swallow</strong> disappeared from the corridor entirely when flows dropped below 26% of normal. Horace's Duskywing was absent during the seven-month low-flow period, though this coincides with the natural end of its flight season — a 7-year correlation test found no significant relationship with discharge (r = 0.11).
+        <strong>Northern Rough-winged Swallow</strong> is a flow-correlated summer resident — present April through September, peaking in May at peak discharge (eBird: r = 0.677, 71 observations). Horace's Duskywing was absent during the seven-month low-flow period, though this coincides with the natural end of its flight season — a 7-year correlation test found no significant relationship with discharge (r = 0.11).
       </p>
       <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-xs text-teal-800">
         The jumping spider <em>Pelegrina sabinema</em> showed the strongest species-level flow correlation in corridor data (r = 0.69, p = 0.019), but does not appear among the 111 declining species in this dataset.
@@ -368,7 +368,7 @@ const SPECIES = [
   {c:"Canyon wren",                    s:"Catherpes mexicanus",            g:"Birds",    prior:14,  curr:6,   chg:-57.1, obs:12,  corr:"inat_only",    water:""},
   {c:"Savannah sparrow",               s:"Passerculus sandwichensis",      g:"Birds",    prior:23,  curr:11,  chg:-52.2, obs:14,  corr:"inat_only",    water:"corridor-present"},
   {c:"Barrow's goldeneye",             s:"Bucephala islandica",            g:"Birds",    prior:16,  curr:9,   chg:-43.8, obs:11,  corr:"inat_only",    water:"corridor-present"},
-  {c:"Northern rough-winged swallow",  s:"Stelgidopteryx serripennis",     g:"Birds",    prior:34,  curr:20,  chg:-41.2, obs:21,  corr:"inat_only",    water:"high-flow-only"},
+  {c:"Northern rough-winged swallow",  s:"Stelgidopteryx serripennis",     g:"Birds",    prior:34,  curr:20,  chg:-41.2, obs:21,  corr:"inat_only",    water:"flow-correlated"},
   {c:"American barn owl",              s:"Tyto furcata",                   g:"Birds",    prior:15,  curr:9,   chg:-40.0, obs:13,  corr:"inat_only",    water:""},
   {c:"Glossy ibis",                    s:"Plegadis falcinellus",           g:"Birds",    prior:11,  curr:0,   chg:-100,  obs:10,  corr:"",             water:"corridor-present"},
   {c:"White-winged scoter",            s:"Melanitta deglandi",             g:"Birds",    prior:14,  curr:1,   chg:-92.9, obs:13,  corr:"",             water:"corridor-present"},
