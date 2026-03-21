@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Front Range Wildlife Intelligence System</title>
+  <title>Wildlife & Water Monitor · Colorado Front Range + Iowa</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background: #f7f8f4; font-family: system-ui, -apple-system, sans-serif; }
@@ -57,12 +57,32 @@
     .corr-tip { position: relative; }
     .corr-tip:hover::after { content: attr(data-tip); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background: #1a3a2a; color: white; font-size: 0.72rem; padding: 4px 8px; border-radius: 4px; white-space: nowrap; z-index: 10; }
 
+    /* Tab navigation */
+    .tab-nav { background: #1a3a2a; }
+    .tab-btn { color: rgba(167,243,208,0.65); border-bottom: 3px solid transparent; padding: 10px 22px; font-weight: 600; font-size: 0.875rem; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; transition: all 0.15s; letter-spacing: 0.02em; }
+    .tab-btn:hover { color: rgba(255,255,255,0.9); border-bottom-color: rgba(82,183,136,0.4); }
+    .tab-btn.active { color: white; border-bottom-color: #52b788; }
+
     @media (max-width: 640px) {
       .hero-stats { grid-template-columns: repeat(3, 1fr); }
+      .tab-btn { padding: 10px 14px; font-size: 0.8rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- ═══════════════════════ PLATFORM NAV ═══════════════════════ -->
+<nav class="tab-nav">
+  <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-y-0 py-1">
+    <span class="text-green-300 text-xs font-semibold tracking-widest uppercase opacity-60 py-2 hidden sm:block">Wildlife &amp; Water Monitor</span>
+    <div class="flex w-full sm:w-auto justify-center sm:justify-end">
+      <button class="tab-btn active" id="btn-co" onclick="showTab('co')">Colorado &middot; Front Range</button>
+      <button class="tab-btn" id="btn-ia" onclick="showTab('ia')">Iowa &middot; South Skunk River</button>
+    </div>
+  </div>
+</nav>
+
+<div id="tab-co">
 
 <!-- ═══════════════════════ HERO ═══════════════════════ -->
 <section class="hero text-white py-16 px-4">
@@ -187,14 +207,13 @@
 
     <!-- Card 4: Water Health -->
     <div class="card-water rounded-xl p-6 shadow-sm">
-      <div class="text-teal-700 text-xs font-bold tracking-widest uppercase mb-3">Water · Plum Creek Corridor</div>
-      <h3 class="text-lg font-bold text-gray-900 mb-3">Water Drives the Corridor</h3>
+      <div class="text-teal-700 text-xs font-bold tracking-widest uppercase mb-3">Water · South Platte &amp; Plum Creek</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">Insects Track Streamflow on the South Platte</h3>
       <p class="text-gray-700 text-sm leading-relaxed mb-4">
-        Plum Creek entered drought stress in <strong>July 2025</strong> — five months below 75% of normal flow before winter arrived. During those months, bird activity along the creek dropped by roughly half compared to the high-flow months earlier in the year.
+        Over a <strong>7-year normalized record</strong> (49 active-season months, 2019–2026), insect observations on the South Platte River corridor track discharge month-by-month. <strong>Black swallowtail</strong> — the most-observed declining insect in this dataset — shows the clearest signal: r = 0.533 against South Platte discharge (p &lt; 0.001, n = 49). When the river runs high in spring, butterfly observations follow. This finding survived the observer-effort normalization that retracted the earlier bird–streamflow result.
       </p>
       <p class="text-gray-700 text-sm leading-relaxed mb-4">
-        <strong>Northern Rough-winged Swallow</strong> is a flow-correlated summer resident — present April through September, peaking in May at peak discharge (eBird: r = 0.677, 71 observations). Horace's Duskywing was absent during the seven-month low-flow period, though this coincides with the natural end of its flight season — a 7-year correlation test found no significant relationship with discharge (r = 0.11).
-        Across the broader South Platte corridor, prior-month discharge predicts insect observations the following month (partial r = 0.73 after temperature control) — a signal confirmed independently in an Iowa agricultural watershed using the same methodology.
+        At Plum Creek, the picture is more site-specific: <strong>Northern Rough-winged Swallow</strong> is a flow-correlated summer resident — present April through September, peaking in May at peak discharge (eBird: r = 0.677, 71 observations). Horace's Duskywing was absent during the seven-month low-flow period, though this coincides with the natural end of its flight season — a 7-year test found no significant relationship with discharge (r = 0.11). The insect-discharge mechanism was independently cross-validated at an Iowa agricultural watershed using the same methodology.
       </p>
     </div>
 
@@ -324,11 +343,224 @@
   </div>
 </section>
 
+</div><!-- /tab-co -->
+
+<!-- ═══════════════════════ IOWA TAB ═══════════════════════ -->
+<div id="tab-ia" style="display:none">
+
+<!-- ───── IOWA HERO ───── -->
+<section class="hero text-white py-16 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-block bg-white/10 text-green-200 text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-5">Iowa · South Skunk River · March 2026</div>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">South Skunk River<br>Water Health Monitor</h1>
+    <p class="text-green-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+      Tracking wildlife and water quality across a farm-country Iowa watershed — using free public data to find where agricultural stress leaves a mark on the insect community.
+    </p>
+    <div class="hero-stats grid grid-cols-5 gap-3 max-w-4xl mx-auto">
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">5,431</div>
+        <div class="text-green-200 text-xs mt-1">observations</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">22</div>
+        <div class="text-green-200 text-xs mt-1">months analyzed</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">0.497</div>
+        <div class="text-green-200 text-xs mt-1">insect-discharge partial r</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">55–66</div>
+        <div class="text-green-200 text-xs mt-1">DNR BioNet BMIBI</div>
+      </div>
+      <div class="stat-card rounded-xl p-4 text-center">
+        <div class="text-3xl font-bold text-white">1</div>
+        <div class="text-green-200 text-xs mt-1">atrazine exceedance</div>
+      </div>
+    </div>
+    <p class="text-green-300 text-xs mt-6">
+      Data: April 2024 – January 2026 &nbsp;·&nbsp; South Skunk River near Ames &amp; Colfax, Iowa &nbsp;·&nbsp; 2 USGS gauges
+    </p>
+  </div>
+</section>
+
+<!-- ───── IOWA PLAIN-ENGLISH INTRO ───── -->
+<section class="max-w-3xl mx-auto px-4 pt-12 pb-4 text-center">
+  <p class="text-gray-700 text-lg leading-relaxed">
+    The South Skunk River runs through Story County, Iowa — a landscape of corn and soybean fields that defines the agricultural Midwest. Using the same methodology developed on Colorado's Front Range, this analysis asks whether freely available public data can detect the health of a farm-country stream: when it's stressed, when it recovers, and where agricultural chemistry leaves a fingerprint on the wildlife community.
+  </p>
+</section>
+
+<!-- ───── IOWA OPENING CALLOUT ───── -->
+<section class="max-w-5xl mx-auto px-4 pt-4 pb-2">
+  <div style="background:#fffbf0; border: 2px solid #d97706; border-radius: 12px; padding: 28px 32px;">
+    <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#b45309; margin-bottom:10px;">What the Data Shows on the South Skunk River</div>
+    <h2 style="font-size:1.35rem; font-weight:800; color:#1a1a1a; margin-bottom:14px; line-height:1.3;">More water in one month. More insects the next.</h2>
+    <p style="color:#374151; font-size:0.975rem; line-height:1.75; margin-bottom:0;">
+      Across 22 months of observations, prior-month discharge on the South Skunk River reliably predicts how many insects will be observed the following month — confirmed at both USGS gauges and surviving temperature control. In June 2024, that pattern broke sharply. Atrazine — the corn herbicide applied at spring planting — reached 1.70 µg/L, approaching the EPA acute risk threshold for aquatic invertebrates (1.8 µg/L) and more than double the chronic limit for aquatic plants (0.68 µg/L). May discharge had been the second-highest in the record; the model predicted strong insect emergence. Instead, June insect observations came in at just 43% of what was predicted — the largest gap in the entire dataset.
+    </p>
+  </div>
+</section>
+
+<!-- ───── IOWA KEY FINDINGS ───── -->
+<section class="max-w-5xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold text-gray-800 mb-2">Key Findings</h2>
+  <p class="text-gray-500 text-sm mb-8">What the data shows — and what we can act on.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+    <!-- Iowa Card 1: Water Signal -->
+    <div class="card-water rounded-xl p-6 shadow-sm">
+      <div class="text-teal-700 text-xs font-bold tracking-widest uppercase mb-3">Water Signal</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">Insects Follow the Water</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        Prior-month discharge predicts the following month's insect observations — confirmed at both USGS gauges on the South Skunk River. After controlling for temperature, the upstream Ames gauge shows partial r = 0.497 (p = 0.026). The downstream Colfax gauge is directionally consistent.
+      </p>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        The mechanism: high water expands aquatic larval habitat — wetted margins, standing pools, hyporheic zones. Adult insects emerge and become observable the following month. This one-month lag matches the development cycle of the midges, flies, and aquatic insects that dominate this watershed.
+      </p>
+      <div class="bg-teal-50 border border-teal-200 rounded-lg p-3 text-xs text-teal-800">
+        <strong>Cross-validation:</strong> Iowa produces the strongest discharge signal of the three sites tested (Colorado, Iowa, Maryland), consistent with its more pronounced seasonal hydrology.
+      </div>
+    </div>
+
+    <!-- Iowa Card 2: Atrazine Episode -->
+    <div class="card-insect rounded-xl p-6 shadow-sm">
+      <div class="text-amber-700 text-xs font-bold tracking-widest uppercase mb-3">June 2024 · Atrazine Episode</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">The Model Predicted Insects.<br>They Didn't Appear.</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        May 2024 discharge was the second-highest month on record — the model predicted strong insect emergence in June. Instead, normalized insect observations were <strong>43% of the predicted level</strong> — the largest negative residual in the 22-month dataset.
+      </p>
+      <div class="space-y-2 mb-4">
+        <div class="bg-white rounded-lg p-3 border border-amber-100">
+          <div class="font-semibold text-gray-800 text-sm">Atrazine: 1.70 µg/L</div>
+          <div class="text-xs text-gray-600 mt-1">Approaching the EPA acute invertebrate threshold (1.8 µg/L) &nbsp;·&nbsp; 96th percentile of all measurements at this site since 1999</div>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-amber-100">
+          <div class="font-semibold text-gray-800 text-sm">2.5× the chronic plant limit</div>
+          <div class="text-xs text-gray-600 mt-1">EPA chronic aquatic plant benchmark: 0.68 µg/L &nbsp;·&nbsp; Atrazine suppresses the algae and submerged plants that insect larvae depend on for food</div>
+        </div>
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800">
+        <strong>Important:</strong> Direction is unambiguous — but one month of coincidence is not causation. Each additional June with both pesticide and observation data narrows the uncertainty.
+      </div>
+    </div>
+
+    <!-- Iowa Card 3: BioNet Validation -->
+    <div class="card-method rounded-xl p-6 shadow-sm">
+      <div class="text-green-700 text-xs font-bold tracking-widest uppercase mb-3">Professional Validation · Iowa DNR BioNet</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">Two Methods, Same Story</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        Iowa DNR biological assessors have sampled this reach using standardized kick-net surveys. Their BMIBI score (Biological Macroinvertebrate Index of Biotic Integrity) places it in the <strong>marginally impaired range</strong>: EPT insects are present but sparse.
+      </p>
+      <div class="space-y-2 mb-4">
+        <div class="bg-white rounded-lg p-3 border border-green-100">
+          <div class="font-semibold text-gray-800 text-sm">Professional BMIBI: 55–66</div>
+          <div class="text-xs text-gray-600 mt-1">Pass/fail threshold is 62. The Story City reach consistently falls just below it. Aquatic life: "Not Supported."</div>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-green-100">
+          <div class="font-semibold text-gray-800 text-sm">iNaturalist EPT: 36 observations</div>
+          <div class="text-xs text-gray-600 mt-1">11 mayflies · 12 stoneflies · 13 caddisflies across 22 months — sparse but present, and flow-sensitive. Exactly what a BMIBI 55–66 stream produces.</div>
+        </div>
+      </div>
+      <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-xs text-green-800">
+        <strong>What this means:</strong> Community science picked up the same ecological condition as professional sampling — from a completely different method, with no biological survey protocol.
+      </div>
+    </div>
+
+    <!-- Iowa Card 4: Aquatic-Emergent Mechanism -->
+    <div class="card-birds rounded-xl p-6 shadow-sm">
+      <div class="text-blue-700 text-xs font-bold tracking-widest uppercase mb-3">Mechanism · Functional Groups</div>
+      <h3 class="text-lg font-bold text-gray-900 mb-3">4% of Observations Drive the Signal</h3>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        Of 3,188 insect observations, just <strong>4% are aquatic-emergent</strong> — EPT insects (mayflies, stoneflies, caddisflies) plus Odonata (dragonflies and damselflies). The other 96% are terrestrial: butterflies, bees, beetles, grasshoppers.
+      </p>
+      <div class="bg-white rounded-lg p-3 border border-blue-100 mb-4">
+        <div class="font-semibold text-gray-800 text-sm">EPT + Odonata discharge signal</div>
+        <div class="text-xs text-gray-600 mt-1">r = 0.539 &nbsp;·&nbsp; p = 0.006 &nbsp;·&nbsp; from just 141 observations across 22 months</div>
+      </div>
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        The correlation isn't coming from butterflies and bumblebees. It's coming from the insects with aquatic larval stages — which confirms the mechanism, not just the correlation.
+      </p>
+      <div class="bg-sky-50 border border-sky-200 rounded-lg p-3 text-xs text-blue-800">
+        <strong>Why it matters:</strong> Targeted EPT monitoring — even from community observers — may detect flow-sensitive stress signals that broad insect counts miss.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Multi-stressor strip -->
+  <div class="mt-8 px-4">
+    <p class="text-gray-600 text-sm leading-relaxed text-center max-w-4xl mx-auto">
+      <span class="font-semibold text-gray-700">Stream context:</span> The South Skunk River near Ames carries three concurrent stressors at mean conditions — E. coli at roughly 5× the recreational contact standard, nitrate exceeding the EPA drinking water limit, and seasonal herbicide pulses each spring at planting. The discharge signal may integrate all of these: high-flow years flush agricultural chemicals through the watershed faster; low-flow years concentrate them. No single stressor explains the insect pattern alone.
+    </p>
+  </div>
+
+</section>
+
+</div><!-- /tab-ia -->
+
+<!-- ═══════════════════════ HOW IT WORKS ═══════════════════════ -->
+<section style="background: #f0f5f1; border-top: 1px solid #dce8dc;" class="py-16 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10">
+      <div class="inline-block bg-white text-green-700 text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-4 border border-green-200">Methodology · Three Locations</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">How It Works</h2>
+      <p class="text-gray-600 text-base max-w-2xl mx-auto leading-relaxed">The same method was tested in three different places. What it found depended on where it was.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+      <!-- Colorado -->
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-green-100">
+        <div class="text-teal-700 text-xs font-bold tracking-widest uppercase mb-2">Colorado · Front Range</div>
+        <div class="text-2xl font-bold text-gray-900 mb-1">Driver: Discharge</div>
+        <div class="text-xs text-gray-500 mb-4">Arid west &nbsp;·&nbsp; 50-mile radius, Highlands Ranch</div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-4">Water is the limiting resource. When rivers and creeks run lower than normal, insects and birds that depend on riparian corridors follow. Black swallowtail tracks South Platte discharge over a 7-year normalized record (r = 0.533, p &lt; 0.001, n = 49 months). Northern Rough-winged Swallow tracks Plum Creek flow seasonally (eBird: r = 0.677).</p>
+        <div class="bg-green-50 rounded-lg p-3 text-xs text-green-800">
+          <span class="font-semibold">What limits this watershed:</span> available water in an arid climate. Flow below normal = wildlife below normal.
+        </div>
+      </div>
+
+      <!-- Iowa -->
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-amber-100">
+        <div class="text-amber-700 text-xs font-bold tracking-widest uppercase mb-2">Iowa · South Skunk River</div>
+        <div class="text-2xl font-bold text-gray-900 mb-1">Driver: Discharge</div>
+        <div class="text-xs text-gray-500 mb-4">Agricultural midwest &nbsp;·&nbsp; Ames to Colfax, Story County</div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-4">The same pattern holds in the humid midwest: prior-month discharge predicts the following month's insect observations (partial r = 0.497 after temperature control). Here, the discharge signal also integrates agricultural stress — the June 2024 atrazine episode produced the largest insect gap in the dataset precisely when the discharge model predicted abundance.</p>
+        <div class="bg-amber-50 rounded-lg p-3 text-xs text-amber-800">
+          <span class="font-semibold">What limits this watershed:</span> discharge integrates agricultural stress — high-flow years dilute and flush; low-flow years concentrate.
+        </div>
+      </div>
+
+      <!-- Maryland -->
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-blue-100">
+        <div class="text-blue-700 text-xs font-bold tracking-widest uppercase mb-2">Maryland · Patuxent River</div>
+        <div class="text-2xl font-bold text-gray-900 mb-1">Driver: Temperature</div>
+        <div class="text-xs text-gray-500 mb-4">Humid east &nbsp;·&nbsp; Laurel to Bowie, Prince George's County</div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-4">A different story entirely. In the humid east, water is rarely scarce — precipitation arrives year-round and rivers stay full. Temperature is what drives insect emergence: same-month temperature correlates with insect observations at r = 0.889. Prior-month discharge adds nothing independent (partial r = 0.067, p = 0.71).</p>
+        <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+          <span class="font-semibold">What limits this watershed:</span> temperature. Spring warming drives emergence regardless of how much water is in the river.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Conclusion -->
+    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 max-w-3xl mx-auto text-center">
+      <p class="text-gray-700 text-sm leading-relaxed">
+        <span class="font-semibold text-gray-800">The central finding across all three sites:</span> the dominant driver of wildlife observations is not the same everywhere. In water-limited western states, scarcity sets the limit. In the humid east, temperature does. A monitoring system designed only for the arid west will produce wrong answers in Maryland. The right question isn't "does water drive wildlife?" — it's "what limits <em>this</em> watershed?"
+      </p>
+    </div>
+
+  </div>
+</section>
+
 <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
 <footer class="border-t border-gray-200 bg-white mt-4">
   <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between gap-4 text-sm text-gray-500">
     <div>
-      <div class="font-semibold text-gray-700 mb-1">Front Range Wildlife Intelligence System</div>
+      <div class="font-semibold text-gray-700 mb-1">Wildlife &amp; Water Monitor</div>
       <div>Open source · Built for under-resourced conservation organizations</div>
       <div class="mt-1">Designed for the <a href="https://butterflies.org" class="text-green-700 hover:underline">Butterfly Pavilion</a>, Westminster, CO</div>
     </div>
@@ -587,6 +819,14 @@ function setWater(btn) {
 // Sort by decline severity (most negative first)
 SPECIES.sort((a, b) => a.chg - b.chg);
 renderTable(SPECIES);
+
+// ─── TAB SWITCHING ────────────────────────────────────────────────────────────
+function showTab(id) {
+  ['co', 'ia'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === id ? 'block' : 'none';
+    document.getElementById('btn-' + t).classList.toggle('active', t === id);
+  });
+}
 </script>
 </body>
 </html>
