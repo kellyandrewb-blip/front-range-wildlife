@@ -102,6 +102,15 @@ detected in earlier studies, none have been measured in the years the wildlife
 data covers. The absence of monitoring is itself a finding, but it limits causal
 inference.
 
+**Pesticide monitoring discontinuity:** Active pesticide sampling in WQP ended
+in 2007 for the Colorado Front Range corridor and 2015 for the Patuxent Maryland
+corridor. The iNaturalist observation windows for both sites (2019–2026 and
+2023–2026 respectively) have zero temporal overlap with the pesticide record. The
+Iowa South Skunk finding — where active NAWQA sampling through 2023 produced a
+contemporaneous atrazine detection — is the exception, not the rule. In two of
+three study locations, direct pesticide-biology correlation is structurally
+impossible with current public data.
+
 ---
 
 ## What Would Make This Stronger
