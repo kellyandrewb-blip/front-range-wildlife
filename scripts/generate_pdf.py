@@ -68,7 +68,7 @@ CSS = """
     margin: 18mm 14mm 22mm 14mm;
 
     @bottom-left {
-        content: "Prepared for Butterfly Pavilion  ·  Front Range Wildlife Intelligence System";
+        content: "Wildlife & Water Monitor — open-source watershed analysis for conservation organizations";
         font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
         font-size: 8pt;
         color: #6b7280;
