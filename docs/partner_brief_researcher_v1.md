@@ -50,6 +50,13 @@ seasonal observer activity.
 
 **June 2024 atrazine episode:**
 - Detected concentration: 1.70 µg/L (WQP single-point measurement)
+- The reading also exceeds the EPA chronic aquatic life criterion
+  for atrazine (1.0 µg/L, 60-day average) by 70%. The MSQA
+  documents that atrazine suppresses sensitive diatoms — the algae
+  that herbivorous mayflies depend on — meaning the pathway from
+  atrazine to EPT decline may be indirect (atrazine → suppressed
+  algae → reduced mayfly food supply) in addition to any direct
+  toxicity effects.
 - Predicted insect observations based on hydrological model: baseline
 - Actual observations: 43% of predicted — the largest negative residual in the
   22-month dataset
@@ -111,6 +118,20 @@ contemporaneous atrazine detection — is the exception, not the rule. In two of
 three study locations, direct pesticide-biology correlation is structurally
 impossible with current public data.
 
+**Sediment-bound contaminants not detectable via WQP:** The MSQA
+(Van Metre and others, 2017) identified bifenthrin — a pyrethroid
+insecticide that accumulates in sediment — as significantly
+associated with degraded invertebrate communities across 99 Midwest
+agricultural streams. Bifenthrin binds to sediment and does not
+appear in water column sampling. A check of 289,000+ Iowa WQP
+records confirmed zero pyrethroid measurements of any kind — not
+because pyrethroids are absent, but because WQP water column
+sampling cannot detect them. The MSQA also documented that even
+low bifenthrin concentrations alter the timing of adult insect
+emergence before causing mortality — an effect that would manifest
+as exactly the kind of discharge-insect gap this methodology
+detects, but from a stressor invisible to the current data pipeline.
+
 ---
 
 ## What Would Make This Stronger
@@ -132,6 +153,20 @@ These are the highest-value additions, in order of impact:
    been validated against eBird (4 of 18 iNaturalist-flagged declines
    independently corroborated). The same validation has not been run for Iowa or
    Colorado bird data. This is a gap in the multi-source corroboration chain.
+
+4. **Sediment chemistry sampling at monitored reaches:** The MSQA
+   found that water column pesticide measurements significantly
+   underestimate total pesticide stress in agricultural streams
+   because pyrethroid insecticides accumulate in bed sediment.
+   A Walnut Creek near Vandalia, Iowa (USGS 05487550) — an MSQA
+   site 21km from our South Skunk monitoring station with published
+   2013 sediment chemistry data — provides the nearest analog for
+   what sediment-bound contaminant loading likely looks like in
+   this corridor. A single sediment grab at the South Skunk WQP
+   station would determine whether bifenthrin is present at
+   concentrations associated with invertebrate degradation in
+   the MSQA dataset. This is the highest-value single field
+   measurement not currently in the public record for this site.
 
 ---
 
