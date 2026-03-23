@@ -2,15 +2,19 @@
 
 ## Project Description
 
-This project connects free public ecological APIs to surface plain-English conservation insights for under-resourced organizations. The primary partner is the **Butterfly Pavilion** in Westminster, CO. The goal is to build a lightweight intelligence system that monitors wildlife observation trends across the Front Range — starting with iNaturalist data — and eventually delivers automated monthly reports that a non-technical conservation team can act on without needing a data analyst.
+This project connects free public ecological APIs to surface plain-English conservation insights for under-resourced organizations. The initial outreach target is the **Butterfly Pavilion** in Westminster, CO — response pending. The goal is to build a lightweight intelligence system that monitors wildlife observation trends across the Front Range — starting with iNaturalist data — and eventually delivers automated monthly reports that a non-technical conservation team can act on without needing a data analyst.
 
 ---
+
+> **Project status, outreach tracker, and document inventory are
+> maintained in wildlife-platform-strategy/STATUS.md — read that
+> file for current state before starting any session.**
 
 ## Important Context
 
 - **The user is not a developer.** Explain every technical decision as you go. Don't assume familiarity with APIs, Python, pandas, or git. When something surprising happens (like hitting an API limit), explain what it means and why the fix works before implementing it.
 - **Always commit after each meaningful milestone.** Each commit message should describe what the code does *and* what it found or changed — future context matters.
-- **Target partner:** Butterfly Pavilion, Westminster, CO — a non-profit focused on invertebrate conservation and environmental education. Keep their use case in mind: they need actionable, jargon-free insights, not raw data.
+- **Initial outreach target — response pending:** Butterfly Pavilion, Westminster, CO — a non-profit focused on invertebrate conservation and environmental education. Keep their use case in mind: they need actionable, jargon-free insights, not raw data.
 
 ---
 
