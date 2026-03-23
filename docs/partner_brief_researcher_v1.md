@@ -151,8 +151,11 @@ These are the highest-value additions, in order of impact:
 
 3. **eBird cross-validation at Iowa and Colorado.** The Patuxent bird signal has
    been validated against eBird (4 of 18 iNaturalist-flagged declines
-   independently corroborated). The same validation has not been run for Iowa or
-   Colorado bird data. This is a gap in the multi-source corroboration chain.
+   independently corroborated). Iowa eBird validation is now complete: r = +0.696
+   (p < 0.001, 23 months, 65 species with significant lag-1 responses) — same
+   directional signal as iNaturalist insects, stronger correlation, survives
+   temperature control (partial r = +0.606, p = 0.002). Colorado eBird
+   cross-validation has not been run and remains a gap in the corroboration chain.
 
 4. **Sediment chemistry sampling at monitored reaches:** The MSQA
    found that water column pesticide measurements significantly
