@@ -18,6 +18,14 @@ This project connects free public ecological APIs to surface plain-English conse
 
 ---
 
+## Branching Policy
+
+Any multi-file structural change uses a named feature branch. Merge to main only after
+Andrew reviews and confirms the dashboard renders correctly. Single-file edits may go
+directly to main.
+
+---
+
 ## Tech Stack
 
 | Tool | Purpose |
